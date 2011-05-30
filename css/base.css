@@ -1,0 +1,152 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Verdana, Sans-Serif;
+    font-size: 12px;
+}
+form {
+    padding: 0;
+    margin: 0;
+}
+p {
+    zoom: 1.0;
+}
+h1 {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 0.67em 0px;
+}
+h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0.83em 0px;
+}
+h3 {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 1em 0px;
+}
+a {
+    color: #000;
+}
+a img {
+    border: 0;
+    vertical-align: middle;
+}
+/* General classes */
+.ui-left {
+    float: left;
+}
+.ui-right {
+    float: right;
+}
+.ui-clear {
+    display: block;
+    clear: both;
+    font: 1px/1px sans-serif;
+    height: 0px;
+}
+.ui-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.ui-overlay-loading {
+    width: 100px;
+    height: 50px;
+    margin: -25px 0 0 -50px;
+    background: #fff url(carbo/images/ui-anim_basic_16x16.gif) center center no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+}
+/* Forms */
+.ui-form .ui-field label {
+    display: block;
+    text-shadow: 0 1px 1px #F5F5F5;
+}
+.ui-form .ui-field {
+    margin: 0;
+    padding: 5px 25px 5px 5px;
+    overflow: hidden;
+}
+.ui-form .ui-text-input {
+    width: 100%;
+    display: block;
+    margin: 2px 0 0 0;
+    padding: 9px;
+    border: 1px solid #AAA;
+}
+.ui-form .ui-select {
+    width: 100%;
+    display: block;
+    margin: 2px 0 0 0;
+    padding: 8px 9px 8px 5px;
+    border: 1px solid #AAA;
+}
+.ui-form .ui-select-field {
+    padding: 5px;
+}
+.ui-form .ui-checkbox-field {
+    margin: 0;
+    padding: 5px;
+}
+.ui-form .ui-form-error {
+    color: #FF3E17;
+    /*font-size: 0.9em;*/
+    text-shadow:0 1px 1px #F5F5F5;
+}
+.ui-form .ui-form-group {
+    padding: 5px;
+}
+.ui-form .ui-form-group-header {
+    padding: .5em;
+    cursor: pointer;
+}
+.ui-form .ui-button-panel {
+    padding: 5px;
+}
+.ui-form .ui-button-panel .ui-button {
+    margin: 0;
+}
+.ui-form .ui-files-table {
+    width: 100%;
+    margin: 5px 0;
+    border-collapse: collapse;
+}
+.ui-form .ui-files-table td {
+    padding: 3px;
+    border: 1px solid #AAA;
+}
+.ui-form .ui-files-table th {
+    padding: 3px;
+    border: 1px solid #AAA;
+    text-align: left;
+    font-weight: normal;
+}
+.ui-form .ui-col-left {
+    width: 49.8%;
+    float: left;
+}
+.ui-form .ui-col-right {
+    width: 49.8%;
+    float: right;
+}
+/* Recaptcha */
+.recaptcha {
+    width: 300px;
+    height: 57px;
+    padding: 5px;
+    margin: 0 10px 0 0;
+    background-color: #fff;
+    border: 1px solid #AAA;
+}
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt  { height: 25px; }
+.ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }

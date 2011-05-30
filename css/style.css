@@ -1,0 +1,128 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Verdana, Sans-Serif;
+    font-size: 12px;
+}
+form {
+    padding: 0;
+    margin: 0;
+}
+p {
+    zoom: 1.0;
+}
+h1 {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 0.67em 0px;
+}
+h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0.83em 0px;
+}
+h3 {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 1em 0px;
+}
+a {
+    color: #000;
+}
+a img {
+    border: 0;
+    vertical-align: middle;
+}
+#header {
+    /*background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px, -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px, -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px, -webkit-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px, -webkit-linear-gradient(0deg, #1B1B1B 10px, transparent 10px), -webkit-linear-gradient(#1D1D1D 25%, #1A1A1A 25%, #1A1A1A 50%, transparent 50%, transparent 75%, #242424 75%, #242424);*/
+    background-color: #131313;
+    background-size: 20px 20px;
+    border-top: 3px solid #FD0;
+}
+#userlinks {
+    margin: 20px 20px 0 0;
+    float: right;
+}
+#menu
+{
+    height: 35px;
+    clear: both;
+    padding: 0 20px 0 0;
+    /*text-shadow: #fff 0px 1px 1px;*/
+}
+#menu ul
+{
+    height: 35px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    float: right;
+}
+#menu li
+{
+    margin: 0 3px;
+    padding: 0;
+    list-style: none;
+    display: block;
+    float: left;
+}
+#menu li a
+{
+    padding: 0 15px;
+    margin: 5px 0 0 0;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    background: #FD0;
+    border-bottom: 0;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    color: #000;
+    border-radius: 7px 7px 0 0;
+    box-shadow: -0px 0px 3px #888;
+    -moz-border-radius: 7px 7px 0 0;
+    -moz-box-shadow: 0px 0px 3px #888;
+    -webkit-border-radius: 7px 7px 0 0;
+    -webkit-box-shadow: 0px 0px 3px #888;
+}
+#menu li:hover a, #menu li:hover a.main
+{
+    background: #f9f9f9;
+    position: relative;
+    z-index: 3;
+}
+#menu li:hover a.main
+{
+    height: 30px;
+}
+#menu li a.active
+{
+    background: #fff;
+    color: #000;
+    position: relative;
+    z-index: 3;
+}
+#menu-bottom {
+
+    width: 100%;
+    height: 4px;
+    margin-top: -4px;
+    z-index: 2;
+    position: absolute;
+    background-image: -webkit-gradient(
+     linear, left bottom, left top,
+     color-stop(0, rgba(219, 219, 219, 100)),
+     color-stop(1, rgba(233, 233, 233, 0))
+     );
+    background-image: -moz-linear-gradient(
+     center bottom,
+     rgba(219, 219, 219, 100) 0%,
+     rgba(233, 233, 233, 0) 100%
+     );
+}
+#content {
+    padding: 5px;
+}

@@ -1,0 +1,11 @@
+.cg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: expression(document.body.clientWidth);
+    height: expression(document.body.clientHeight);
+}
+.cg-dialog {
+    position: absolute;
+}

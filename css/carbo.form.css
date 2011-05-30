@@ -1,0 +1,109 @@
+.cg-clear {
+    clear: both;
+    display: block;
+}
+.cg-left {
+    float: left;
+    display: block;
+}
+.cg-right {
+    float: right;
+    display: block;
+}
+.cg-error {
+    margin: 10px 0;
+    padding: 10px;
+}
+.cg-error .ui-icon {
+    margin-right: 10px;
+}
+.cg-error ul {
+    margin: 0;
+    padding: 0;
+}
+.cg-error ul li {
+    margin: 3px 0;
+    /*list-style: disc;*/
+    list-style: none;
+    /*font-size: 1.1em;*/
+}
+.cg-form-dialog {
+    /*font-size: 10px;*/
+}
+.cg-form {
+    /*font-size: 1.1em;*/
+}
+.cg-form .cg-group {
+    margin: 0 0 10px 0;
+}
+.cg-form .cg-group-header {
+    padding: 0.5em;
+}
+.cg-form .cg-group-header .ui-icon {
+    cursor: pointer;
+}
+.cg-form .cg-group-content {
+    padding: 0.5em 0;
+}
+.cg-form .cg-field-cont {
+    margin: 0 0 5px 0;
+    padding: 0 10px 0 0;
+    overflow: hidden;
+}
+.cg-form .cg-dropdown-field-cont {
+    padding: 0;
+}
+.cg-form input, .cg-form select, .cg-form textarea, .cg-form label {
+    /*margin: 0;
+    display: block;
+    float: left;*/
+}
+.cg-form input.cg-button {
+    margin: 0;
+    display: inline;
+    font-size: 1em;
+}
+.cg-form label {
+    width: 100%;
+    margin: 0;
+    display: block;
+    /*width: 180px;
+    padding-right: 5px;
+    line-height: 23px;
+    text-align: right;*/
+}
+.cg-form .cg-checkbox-field-cont label {
+    width: auto;
+    display: inline;
+}
+.cg-form textarea {
+    width: 100%;
+    padding: 4px;
+    /*border: 1px solid #000;*/
+}
+input.cg-checkbox {
+    border: 0;
+    margin: 5px 0;
+}
+input.cg-short {
+    margin: 0;
+    display: block;
+    width: 50px;
+    padding: 4px;
+    /*border: 1px solid #000;*/
+}
+input.cg-long {
+    /*width: 400px;*/
+    margin: 0;
+    display: block;
+    width: 100%;
+    padding: 4px;
+    /*border: 1px solid #000;*/
+}
+select.cg-long {
+    display: block;
+    padding: 4px;
+    width: 100%;
+    /*border: 1px solid #000;*/
+}
+
