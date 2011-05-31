@@ -149,6 +149,9 @@ class Carboform
                     case 'date':
                         $this->formdata[$key] = is_null($this->item_id) ? $column->form_default : carbo_format_date($item_data->{$column->unique_name}, 'Y-m-d', $column->date_format);
                         break;
+                    case '1-n':
+                        $this->formdata[$key] = is_null($this->item_id) ? $column->form_default : $item_data->{$column->unique_name . '_id'};
+                        break;
                 }
             }
         }

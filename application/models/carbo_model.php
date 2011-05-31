@@ -79,7 +79,7 @@ class Carbo_model extends CI_Model
                         if ($ref_ids)
                         {
                             //$this->db->select("{$table}_main.{$field->db_name} AS `{$field->db_name}`");
-                            $this->db->select("{$table}.{$field->db_name}");
+                            $this->db->select("{$table}.{$field->db_name} AS `{$field->unique_name}_id`");
                         }
                         break;
 
@@ -263,7 +263,7 @@ class Carbo_model extends CI_Model
                     case 'date':
                         // Convert to MySQL date
                         //$table_data[$field->db_name] = date('Y-m-d', carbo_parse_date($value, $field->date_format));
-                        $table_data[$field->db_name] = carbo_format_date($value, $field->date_format, 'Y-m-d');
+                        $table_data[$field->db_name] = $value ? carbo_format_date($value, $field->date_format, 'Y-m-d') : NULL;
                         break;
 
                     // File

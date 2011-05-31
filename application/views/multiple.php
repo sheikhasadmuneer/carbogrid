@@ -4,9 +4,9 @@
 <table width="100%">
     <tr>
         <td style="vertical-align:top;"><?php echo $grid1; ?></td>
-        <td>
-            <input type="submit" name="activate" value="Activate &gt;" /><br/>
-            <input type="submit" name="unactivate" value="&lt; Unactivate" />
+        <td style="text-align:center;">
+            <input style="width:100px;" type="submit" name="activate" value="Activate &gt;" /><br/>
+            <input style="width:100px;" type="submit" name="unactivate" value="&lt; Unactivate" />
         </td>
         <td style="vertical-align:top;"><?php echo $grid2; ?></td>
     </tr>

@@ -163,7 +163,7 @@
                             <tr>
                                 <?php if ($grid->allow_pagination): ?>
                                 <td class="cg-pagination">
-                                    <div class="cg-left">
+
                                         <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_first') . '" class="cg-pag-first cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></span>' : '<a title="' . lang('cg_page_first') . '" href="' . site_url($grid->first_link) . '" class="cg-pag-first cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></a>'; ?>
                                         <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_prev') . '" class="cg-pag-prev cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></span>' : '<a title="' . lang('cg_page_prev') . '" href="' . site_url($grid->prev_link) . '" class="cg-pag-prev cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></a>'; ?>
                                         <?php foreach ($grid->page_links as $page_nr => $url) { ?>
@@ -171,14 +171,12 @@
                                         <?php } ?>
                                         <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_next') . '" class="cg-pag-next cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></span>' : '<a title="' . lang('cg_page_next') . '" href="' . site_url($grid->next_link) . '" class="cg-pag-next cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></a>'; ?>
                                         <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_last') . '" class="cg-pag-last cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></span>' : '<a title="' . lang('cg_page_last') . '" href="' . site_url($grid->last_link) . '" class="cg-pag-last cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></a>'; ?>
-                                    </div>
-                                    <div class="cg-left">
+
                                         &nbsp;<?php echo lang('cg_page_size') . '&nbsp;' . form_dropdown('cg_' . $grid->id . '_page_size', $grid->limits, $grid->limit, 'class="cg-page-size"'); ?>&nbsp;
                                         <?php if ($grid->ajax) { ?><noscript><?php } ?>
                                             <input type="submit" name="cg_<?php echo $grid->id; ?>_change_page_size" value="<?php echo lang('cg_go'); ?>" class="cg-button cg-button-text-only ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
                                         <?php if ($grid->ajax) { ?></noscript><?php } ?>
-                                    </div>
-                                    <div class="cg-clear"></div>
+
                                 </td>
                                 <?php endif ?>
                                 <td class="cg-items-nr">
@@ -213,15 +211,6 @@
                     <?php $i++; } ?>
                 </tr>
                 <?php } ?>
-
-                <?php if (!count($grid->data)): // If no data exists ?>
-                <tr>
-                    <?php if ($grid->allow_select): ?>
-                    <td class="ui-widget-content">&nbsp;</td>
-                    <?php endif ?>
-                    <td class="ui-widget-content" colspan="<?php echo count($grid->columns) + $command_nr; ?>"><?php echo lang('cg_no_items'); ?></td>
-                </tr>
-                <?php endif ?>
 
                 <?php $i = 0; foreach ($grid->data as $data_row) { $i++; $data_id = $data_row->{$grid->table_id_name}; ?>
                 <tr class="ui-widget-content <?php echo (($i % 2) ? 'cg-even' : 'cg-odd') . (($i == 1) ? ' cg-first' : '') . (($i == $grid->limit) ? ' cg-last' : ''); ?>">
@@ -286,23 +275,27 @@
                         ?>
                     </td>
                     <?php endforeach ?>
-                    <?php /*
-                    <td class="cg-data cg-command ui-widget-content">
-                        <?php foreach ($grid->commands as $command) if ($command['grid']) {
-                            echo form_submit('cg_command_' . $command['name'], $data_id, 'title="' . $command['text'] . '" class="cg-right ui-icon ui-icon-' . $command['icon'] . ' cg-command cg-icon-button"');
-                        } ?>
-                    </td>*/ ?>
                 </tr>
                 <?php } ?>
-                <?php /*
-                <?php if ($i < $grid->limit) for ($j = $i - 1; $j < $grid->limit; $j++) { ?>
-                <tr class="ui-widget-content <?php echo (($j % 2) ? 'even' : 'odd') . (($j == 0) ? ' first' : '') . (($j == $grid->limit - 1) ? ' last' : ''); ?>">
-                    <?php for ($k = 0; $k < count($grid->header) + 2; $k++) { ?>
+
+                <?php if (!count($grid->data)): // If no data exists ?>
+                <tr>
+                    <?php if ($grid->allow_select): $i++; ?>
                     <td class="ui-widget-content">&nbsp;</td>
+                    <?php endif ?>
+                    <td class="ui-widget-content" colspan="<?php echo count($grid->columns) + $command_nr; ?>"><?php echo lang('cg_no_items'); ?></td>
+                </tr>
+                <?php endif ?>
+
+                <?php if ($grid->show_empty_rows AND $i < $grid->limit) for ($j = $i; $j < $grid->limit; $j++) { ?>
+                <tr class="<?php echo (($j % 2) ? 'even' : 'odd') . (($j == 0) ? ' first' : '') . (($j == $grid->limit - 1) ? ' last' : ''); ?>">
+                    <td class="cg-empty cg-select ui-widget-content"><input type="checkbox" style="visibility:hidden;" /></td>
+                    <?php for ($k = 0; $k < count($grid->columns) + $command_nr; $k++) { ?>
+                    <td class="cg-empty ui-widget-content">&nbsp;</td>
                     <?php } ?>
                 </tr>
                 <?php } ?>
-                */ ?>
+
             </tbody>
         </table>
 <?php endif ?>

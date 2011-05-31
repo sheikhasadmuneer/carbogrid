@@ -182,9 +182,12 @@ html, body {
 .cg-grid .cg-select {
     width: 1%;
     padding: 5px;
+    text-align: center;
+    vertical-align: middle;
 }
 .cg-grid .cg-select input {
     margin: 0;
+    padding: 0;
 }
 .cg-grid th.cg-command {
     width: 1%;
@@ -205,6 +208,11 @@ html, body {
 }
 .cg-grid td.cg-command a.cg-icon {
     font-size: 8px;
+}
+.cg-grid td.cg-empty {
+    /*padding: 6px 5px;*/
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
 }
 .cg-grid tr.cg-first td {
     border-top: 0;

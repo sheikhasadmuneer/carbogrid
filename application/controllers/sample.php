@@ -69,7 +69,7 @@ class Sample extends CI_Controller
             'url' => 'sample/single',
             'uri_param' => $grid,
             'columns' => $columns,
-            'ajax' => FALSE
+            'ajax' => TRUE
         );
 
         $this->load->library('carbogrid', $params);

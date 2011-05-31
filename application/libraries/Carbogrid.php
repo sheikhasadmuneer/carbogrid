@@ -45,6 +45,7 @@ class Carbogrid
     public $offset = 0;
     public $pagination_links = 5;
     public $max_cell_length = 50;
+    public $show_empty_rows = TRUE;
 
     public $order_string = 'none';
     public $filter_string = 'all';
@@ -668,7 +669,7 @@ class Carbogrid
         if ($this->allow_pagination && $this->render_table)
         {
             $limit = is_null($this->limit) ? $this->total : $this->limit;
-            $this->page_max = ceil($this->total / $limit);
+            $this->page_max = $this->total ? ceil($this->total / $limit) : 1;
             $this->page_curr = ceil(($this->offset + 1) / $limit);
             $this->page_curr = ($this->page_curr > $this->page_max) ? $this->page_max : $this->page_curr;
             $this->page_curr = ($this->page_curr < 1) ? 1 : $this->page_curr;
