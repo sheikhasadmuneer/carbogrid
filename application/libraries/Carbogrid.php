@@ -7,7 +7,6 @@ class Carbogrid
      * Filters control by type
      * Parse date + format date
      * Datetimepicker
-     * Javascript actions
      * Allow add/edit/delete conditional
      * Go to page + page size textfield
      *

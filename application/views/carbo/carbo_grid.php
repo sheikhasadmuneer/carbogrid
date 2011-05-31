@@ -4,8 +4,8 @@
     <script type="text/javascript">
     <?php
         echo '' .
-        "$(function() {" .
-            "settings = {" .
+        "" .
+            "if (cgSettings == undefined) var cgSettings = {}; cgSettings['" . $grid->id . "'] = {" .
                 "baseUrl: '" . base_url() . ($this->config->item('index_page') ? ($this->config->item('index_page') . '/') : '') . "'," .
                 "gridUrl: '" . $grid->url . "'," .
                 "params: '" . ($grid->params ? ($grid->params . '/') : '') . "'," .
@@ -34,8 +34,8 @@
         }
         echo rtrim($commands_str, ',');
         echo "}};";
-        echo "cgInstances['" . $grid->id . "'] = new Carbogrid('carbogrid_" . $grid->id . "', settings);";
-        echo "});\n";
+        //echo "cgInstances['" . $grid->id . "'] = new Carbogrid('carbogrid_" . $grid->id . "', settings);";
+        //echo "});\n";
     ?>
     </script>
     <?php endif ?>
@@ -94,21 +94,19 @@
 <?php endif ?>
 
  <?php if ($grid->render_table): ?>
-        <?php if ($grid->ajax): ?>
+        <?php if ($grid->ajax && $grid->is_ajax): ?>
         <script type="text/javascript">
-            $(function() {
-                cgInstances['<?php echo $grid->id; ?>'].setParams({
-                    params: '<?php echo ($grid->params ? ($grid->params . '/') : ''); ?>',
-                    paramsBefore: '<?php echo $grid->params_before; ?>',
-                    paramsAfter: '<?php echo $grid->params_after; ?>',
-                    pageSize: '<?php echo $grid->page_size; ?>',
-                    page: '<?php echo $grid->page; ?>',
-                    limit: <?php echo is_null($grid->limit) ? 'null' : $grid->limit; ?>,
-                    offset: <?php echo $grid->offset; ?>,
-                    columnString: '<?php echo $grid->column_string; ?>',
-                    orderString: '<?php echo $grid->order_string; ?>',
-                    filterString: '<?php echo $grid->filter_string; ?>'
-                });
+            cgInstances['<?php echo $grid->id; ?>'].setParams({
+                params: '<?php echo ($grid->params ? ($grid->params . '/') : ''); ?>',
+                paramsBefore: '<?php echo $grid->params_before; ?>',
+                paramsAfter: '<?php echo $grid->params_after; ?>',
+                pageSize: '<?php echo $grid->page_size; ?>',
+                page: '<?php echo $grid->page; ?>',
+                limit: <?php echo is_null($grid->limit) ? 'null' : $grid->limit; ?>,
+                offset: <?php echo $grid->offset; ?>,
+                columnString: '<?php echo $grid->column_string; ?>',
+                orderString: '<?php echo $grid->order_string; ?>',
+                filterString: '<?php echo $grid->filter_string; ?>'
             });
         </script>
         <?php endif ?>

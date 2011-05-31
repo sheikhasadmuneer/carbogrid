@@ -30,22 +30,6 @@
 
     <link href="<?php echo base_url(); ?>css/style.css" rel="stylesheet" type="text/css" />
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js" type="text/javascript"></script>
-
-    <script src="<?php echo base_url(); ?>js/jquery.bbq.js" type="text/javascript"></script>
-    <script src="<?php echo base_url(); ?>js/jquery.form.js" type="text/javascript"></script>
-    <script src="<?php echo base_url(); ?>js/carbo.grid.js" type="text/javascript"></script>
-    <script src="<?php echo base_url(); ?>js/carbo.form.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        $(function() {
-            $('#change_theme').change(function() {
-                $('link[href*=jquery-ui]').attr('href', $(this).val());
-            });
-        });
-    </script>
-
 </head>
 
 <body>
@@ -59,6 +43,22 @@
 <?php $this->load->view('footer'); ?>
 
 </div><!-- /#wrapper -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js" type="text/javascript"></script>
+
+<script src="<?php echo base_url(); ?>js/jquery.bbq.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/jquery.form.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/carbo.grid.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/carbo.form.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function() {
+        $('#change_theme').change(function() {
+            $('link[href*=jquery-ui]').attr('href', $(this).val());
+        });
+    });
+</script>
 
 </body>
 

@@ -1,4 +1,4 @@
-var cgInstances = new Array();
+var cgInstances = {};
 
 function Carbogrid(id, opt) {
     // If element does not exist, return
@@ -7,6 +7,7 @@ function Carbogrid(id, opt) {
     // Public members
     this.id = id;
     this.container = $('#' + id);
+    this.defHash = '';
     this.hash = '';
     this.preventLoad = false;
 
@@ -291,6 +292,7 @@ function Carbogrid(id, opt) {
                 return false;
             }
         });
+        me.defHash = me.createUri();
         // Call load event
         this.load();
     }
@@ -431,7 +433,8 @@ function Carbogrid(id, opt) {
 
 function carboHashChange() {
     var hash = $.deparam.fragment();
-    for (var id in hash) {
+    for (var id in cgInstances) {
+        if (hash[id] === undefined) hash[id] = cgInstances[id].defHash;
         if (cgInstances[id].hash != hash[id] && !cgInstances[id].preventLoad)
             cgInstances[id].get(hash[id]);
         else
@@ -440,6 +443,10 @@ function carboHashChange() {
 }
 
 $(function() {
+    // Init grids
+    for (var id in cgSettings) {
+        cgInstances[id] = new Carbogrid('carbogrid_' + id, cgSettings[id]);
+    }
     // Init history plugin
     $(window).bind('hashchange', carboHashChange);
     if ($.param.fragment())
