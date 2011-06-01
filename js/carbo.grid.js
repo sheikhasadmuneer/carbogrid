@@ -1,4 +1,5 @@
-var cgInstances = {};
+if (cgSettings == undefined) var cgSettings = {};
+if (cgInstances == undefined) var cgInstances = {};
 
 function Carbogrid(id, opt) {
     // If element does not exist, return
@@ -10,6 +11,7 @@ function Carbogrid(id, opt) {
     this.defHash = '';
     this.hash = '';
     this.preventLoad = false;
+    this.settings = {};
 
     // Private members
     var context = this.container[0];
@@ -52,6 +54,7 @@ function Carbogrid(id, opt) {
 
     this.setParams = function(params) {
         $.extend(settings, params);
+        this.settings = settings;
     }
 
     this.createUri = function(p) {
@@ -227,7 +230,7 @@ function Carbogrid(id, opt) {
             });
             // Init select all checkbox
             $('.cg-grid th.cg-select :checkbox', context).live('click', function() {
-                $(this).parents('table').find('td :checkbox').attr('checked', $(this).attr('checked'));
+                $(this).closest('table').find('td :checkbox').attr('checked', $(this).attr('checked'));
                 if ($(this).attr('checked')) {
                     $(this).closest('table').find('tbody td.cg-data').addClass('ui-state-highlight').removeClass('ui-widget-content');
                 }
@@ -293,6 +296,7 @@ function Carbogrid(id, opt) {
             }
         });
         me.defHash = me.createUri();
+        me.settings = settings;
         // Call load event
         this.load();
     }
@@ -402,6 +406,10 @@ function Carbogrid(id, opt) {
         }
         if (resp.dialog) {
             $('.cg-dialog-wrapper .ui-dialog-content', context).html(resp.dialog);
+            // Init form
+            if (cfSettings[shortID]) {
+                cfInstances[shortID] = cfInstances[shortID] = new Carboform('carboform_' + shortID, cfSettings[shortID]);
+            }
         }
         else {
             $('.cg-dialog-wrapper .cg-hidden-command', context).html('');
@@ -435,7 +443,7 @@ function carboHashChange() {
     var hash = $.deparam.fragment();
     for (var id in cgInstances) {
         if (hash[id] === undefined) hash[id] = cgInstances[id].defHash;
-        if (cgInstances[id].hash != hash[id] && !cgInstances[id].preventLoad)
+        if (cgInstances[id].hash != hash[id] && !cgInstances[id].preventLoad && cgInstances[id].settings.ajaxHistory)
             cgInstances[id].get(hash[id]);
         else
             cgInstances[id].preventLoad = false;
@@ -443,14 +451,15 @@ function carboHashChange() {
 }
 
 $(function() {
-    // Init grids
+    // Init grids if any
     for (var id in cgSettings) {
         cgInstances[id] = new Carbogrid('carbogrid_' + id, cgSettings[id]);
     }
     // Init history plugin
     $(window).bind('hashchange', carboHashChange);
-    if ($.param.fragment())
+    if ($.param.fragment()) {
         setTimeout(function() { $(window).trigger('hashchange'); }, 100);
+    }
 });
 
 // ---------------------------------------------------------------------

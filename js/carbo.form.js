@@ -1,22 +1,23 @@
-var cfInstances = new Array();
+if (cfSettings == undefined) var cfSettings = {};
+if (cfInstances == undefined) var cfInstances = {};
 
 function Carboform(id, opt) {
     // If element does not exist, return
     if (!$('#' + id).length) return false;
-    
+
     // Public members
     this.id = id;
     this.container = $('#' + id);
-    
+
     // Private members
     var context = this.container[0];
     var me = this;
     var settings = opt;
-    
+
     this.init = function() {
-        this.load();    
+        this.load();
     }
-    
+
     this.load = function() {
         // Init show/hide sections
         $('.cg-group-header', context).disableSelection();
@@ -31,9 +32,16 @@ function Carboform(id, opt) {
         // Init datepickers
         $('.cg-datepicker', context).datepicker();
     }
-    
+
     this.init();
 }
+
+$(function() {
+    // Init forms if any
+    for (var id in cfSettings) {
+        cfInstances[id] = new Carboform('carboform_' + id, cfSettings[id]);
+    }
+});
 
 /*$(document).ready(function() {
 	var baseUrl = $('.form-base-url').text();

@@ -12,3 +12,7 @@
     </tr>
 </table>
 <?php echo form_close(); ?>
+
+<h2>Grid with no ajax history</h2>
+
+<?php echo $grid3; ?>

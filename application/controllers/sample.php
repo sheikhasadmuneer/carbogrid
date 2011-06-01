@@ -18,6 +18,7 @@ class Sample extends CI_Controller
                 'db_name' => 'username',
                 'header' => 'Username',
                 'group' => 'User',
+                'required' => TRUE,
                 'form_control' => 'text_long',
                 'type' => 'string'),
             1 => array(
@@ -86,7 +87,7 @@ class Sample extends CI_Controller
         $this->load->view('container', $data);
     }
 
-    function multiple($grid1 = 'none', $grid2 = 'none')
+    function multiple($grid1 = 'none', $grid2 = 'none', $grid3 = 'none')
     {
         if ($this->input->post('activate'))
         {
@@ -141,15 +142,17 @@ class Sample extends CI_Controller
             'table' => 'cm_user',
             'url' => 'sample/multiple',
             'uri_param' => $grid1,
-            'params_after' => $grid2,
+            'params_after' => $grid2 . '/' . $grid3,
             'columns' => $columns,
             'order' => array(0 => 'desc'),
             'hard_filters' => array(
-                array('field' => 2, 'value' => 0)
+                array('field' => 2, 'value' => FALSE)
             ),
-            'allow_add' => TRUE,
-            'allow_edit' => TRUE,
+            'allow_add' => FALSE,
+            'allow_edit' => FALSE,
             'allow_delete' => FALSE,
+            'allow_filter' => FALSE,
+            'allow_columns' => FALSE,
             'nested' => TRUE,
             'ajax' => TRUE
         );
@@ -176,7 +179,6 @@ class Sample extends CI_Controller
                 'db_name' => 'age',
                 'header' => 'Age',
                 'group' => 'User',
-                'required' => TRUE,
                 'form_control' => 'text_short',
                 'type' => 'integer'),
             2 => array(
@@ -195,13 +197,16 @@ class Sample extends CI_Controller
             'url' => 'sample/multiple',
             'uri_param' => $grid2,
             'params_before' => $grid1,
+            'params_after' => $grid3,
             'columns' => $columns,
             'hard_filters' => array(
-                array('field' => 2 , 'value' => 1)
+                array('field' => 2 , 'value' => TRUE)
             ),
             'allow_add' => FALSE,
             'allow_edit' => FALSE,
             'allow_delete' => FALSE,
+            'allow_filter' => FALSE,
+            'allow_columns' => FALSE,
             'nested' => TRUE,
             'ajax' => TRUE
         );
@@ -214,10 +219,75 @@ class Sample extends CI_Controller
             return FALSE;
         }
 
+        // Grid 3
+        $columns = array(
+            0 => array(
+                'name' => 'Username',
+                'db_name' => 'username',
+                'header' => 'Username',
+                'group' => 'User',
+                'required' => TRUE,
+                'form_control' => 'text_long',
+                'type' => 'string'),
+            2 => array(
+                'name' => 'Birthday',
+                'db_name' => 'birthday',
+                'header' => 'Birthday',
+                'group' => 'User',
+                'form_control' => 'datepicker',
+                'type' => 'date'),
+            3 => array(
+                'name' => 'Active',
+                'db_name' => 'active',
+                'header' => 'Active',
+                'group' => 'User',
+                'allow_filter' => FALSE,
+                'form_control' => 'checkbox',
+                'type' => 'boolean'),
+            4 => array(
+                'name' => 'City',
+                'db_name' => 'city',
+                'header' => 'City',
+                'group' => 'User',
+                'allow_filter' => FALSE,
+                'ref_table_db_name' => 'cm_city',
+                'ref_field_db_name' => 'name',
+                'ref_field_type' => 'string',
+                'form_control' => 'dropdown',
+                'type' => '1-n'),
+            5 => array(
+                'name' => 'Comment',
+                'db_name' => 'opinion',
+                'header' => 'Comment',
+                'group' => 'Comment',
+                'form_control' => 'textarea',
+                'type' => 'text')
+        );
+
+        $params = array(
+            'id' => 'users',
+            'table' => 'cm_user',
+            'url' => 'sample/multiple',
+            'uri_param' => $grid3,
+            'params_before' => $grid1 . '/' . $grid2,
+            'columns' => $columns,
+            'ajax' => TRUE,
+            'ajax_history' => FALSE
+        );
+
+        $this->load->library('carbogrid', $params, 'grid3');
+
+        if ($this->grid3->is_ajax)
+        {
+            $this->grid3->render();
+            return FALSE;
+        }
+
         // Pass grid to the view
         $data->page = 'multiple';
         $data->grid1 = $this->grid1->render();
         $data->grid2 = $this->grid2->render();
+        $data->grid3 = $this->grid3->render();
 
         $this->load->view('container', $data);
     }

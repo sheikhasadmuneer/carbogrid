@@ -56,10 +56,6 @@ class MY_Form_validation extends CI_Form_validation {
             return FALSE;
         }
 
-        $ret['tm_hour'] = isset($ret['tm_hour']) ? $ret['tm_hour'] : 0;
-        $ret['tm_min'] = isset($ret['tm_hour']) ? $ret['tm_hour'] : 0;
-        $ret['tm_sec'] = isset($ret['tm_hour']) ? $ret['tm_hour'] : 0;
-
         //return date($format, mktime($ret['tm_hour'], $ret['tm_min'], $ret['tm_sec'], $ret['tm_mon'], $ret['tm_mday'], $ret['tm_year']));
         return carbo_format_date($ret, $format, $format);
     }

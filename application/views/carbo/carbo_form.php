@@ -15,12 +15,10 @@
 <?php } ?>
 
 <script type="text/javascript">
-    $(function() {
-        settings = {
-            baseUrl: '<?php echo base_url() . ($this->config->item('index_page') ? ($this->config->item('index_page') . '/') : ''); ?>'
-        };
-        cfInstances['carboform_<?php echo $form->id; ?>'] = new Carboform('carboform_<?php echo $form->id; ?>', settings);
-    });
+    if (cfSettings == undefined) var cfSettings = {};
+    cfSettings['<?php echo $form->id; ?>'] = {
+        baseUrl: '<?php echo base_url() . ($this->config->item('index_page') ? ($this->config->item('index_page') . '/') : ''); ?>'
+    };
 </script>
 
 <?php

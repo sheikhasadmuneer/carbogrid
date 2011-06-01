@@ -19,10 +19,6 @@
             return FALSE;
         }
 
-        $ret['tm_hour'] = isset($ret['tm_hour']) ? $ret['tm_hour'] : 0;
-        $ret['tm_min'] = isset($ret['tm_hour']) ? $ret['tm_hour'] : 0;
-        $ret['tm_sec'] = isset($ret['tm_hour']) ? $ret['tm_hour'] : 0;
-
         return mktime($ret['tm_hour'], $ret['tm_min'], $ret['tm_sec'], $ret['tm_mon'], $ret['tm_mday'], $ret['tm_year']);
     }
 
@@ -49,10 +45,6 @@
             {
                 return FALSE;
             }
-
-            $date['tm_hour'] = isset($date['tm_hour']) ? $date['tm_hour'] : '00';
-            $date['tm_min'] = isset($date['tm_hour']) ? $date['tm_hour'] : '00';
-            $date['tm_sec'] = isset($date['tm_hour']) ? $date['tm_hour'] : '00';
         }
 
         $output_format = preg_replace('/d/', $date['tm_mday'], $output_format);
@@ -121,6 +113,10 @@
         {
             $ret[$return[strtolower($id[$i])]] = $dp[$i + 1];
         }
+
+        $ret['tm_hour'] = isset($ret['tm_hour']) ? $ret['tm_hour'] : 0;
+        $ret['tm_min'] = isset($ret['tm_hour']) ? $ret['tm_hour'] : 0;
+        $ret['tm_sec'] = isset($ret['tm_hour']) ? $ret['tm_hour'] : 0;
 
         return $ret;
     }

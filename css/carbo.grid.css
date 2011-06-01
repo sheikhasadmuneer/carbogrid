@@ -121,6 +121,7 @@ html, body {
 .cg-filter-cell input, .cg-filter-cell select {
     /*width: 100%;*/
     margin: 0;
+    background: #fff;
 }
 .cg-rel {
     position: relative;

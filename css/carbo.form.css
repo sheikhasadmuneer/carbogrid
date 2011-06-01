@@ -53,10 +53,8 @@
 .cg-form .cg-dropdown-field-cont {
     padding: 0;
 }
-.cg-form input, .cg-form select, .cg-form textarea, .cg-form label {
-    /*margin: 0;
-    display: block;
-    float: left;*/
+.cg-form input, .cg-form select, .cg-form textarea {
+    background: #fff;
 }
 .cg-form input.cg-button {
     margin: 0;
