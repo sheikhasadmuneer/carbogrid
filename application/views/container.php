@@ -22,7 +22,7 @@
     <link href="<?php echo base_url(); ?>favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <?php /*<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/base/jquery-ui.css" type="text/css" media="all" /> */ ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>css/carbo/jquery-ui-1.8.13.custom.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>css/carbo/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
 
     <link href="<?php echo base_url(); ?>css/carbo.grid.css" rel="stylesheet" type="text/css" media="all" />
     <!--[if lt IE 7]><link href="<?php echo base_url(); ?>css/carbo.grid.ie6.css" rel="stylesheet" type="text/css" media="all" /><![endif]-->
@@ -44,11 +44,12 @@
 
 </div><!-- /#wrapper -->
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
 
 <script src="<?php echo base_url(); ?>js/jquery.bbq.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>js/jquery.form.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/jquery.timepicker.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>js/carbo.grid.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>js/carbo.form.js" type="text/javascript"></script>
 

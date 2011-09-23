@@ -50,11 +50,19 @@
     padding: 0 10px 0 0;
     overflow: hidden;
 }
-.cg-form .cg-dropdown-field-cont {
+.cg-form .cg-dropdown-field-cont, .cg-form .cg-file-field-cont {
     padding: 0;
 }
+.cg-form .cg-files {
+    width: 100%;
+    margin: 5px 0;
+    border-collapse: collapse;
+}
+.cg-form .cg-files td {
+    padding: 5px;
+}
 .cg-form input, .cg-form select, .cg-form textarea {
-    background: #fff;
+    background-color: #fff;
 }
 .cg-form input.cg-button {
     margin: 0;
@@ -104,4 +112,8 @@ select.cg-long {
     width: 100%;
     /*border: 1px solid #000;*/
 }
-
+.ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
+.ui-timepicker-div dl{ text-align: left; }
+.ui-timepicker-div dl dt{ height: 25px; }
+.ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }

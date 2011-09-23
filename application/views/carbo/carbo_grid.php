@@ -22,6 +22,18 @@
                 "allowSelect: " . ($grid->allow_select ? 'true' : 'false') . "," .
                 "allowColumns: " . ($grid->allow_columns ? 'true' : 'false') . "," .
                 "ajaxHistory: " . ($grid->ajax_history ? 'true' : 'false') . "," .
+                "monthNames: [\"" . implode('","', $grid->month_names) . "\"]," .
+                "monthNamesShort: [\"" . implode('","', $grid->month_names_short) . "\"]," .
+                "dayNames: [\"" . implode('","', $grid->day_names) . "\"]," .
+                "dayNamesShort: [\"" . implode('","', $grid->day_names_short) . "\"]," .
+                "dayNamesMin: [\"" . implode('","', $grid->day_names_min) . "\"]," .
+                "timeOnlyTitle: '" . lang('cg_time_only_title') . "'," .
+                "timeText: '" . lang('cg_time') . "'," .
+                "hourText: '" . lang('cg_hour') . "'," .
+                "minuteText: '" . lang('cg_minute') . "'," .
+                "secondText: '" . lang('cg_second') . "'," .
+                "currentText: '" . lang('cg_now') . "'," .
+                "closeText: '" . lang('cg_done') . "'," .
                 "commands: {";
         $commands_str = "";
         foreach ($grid->commands as $command) {
@@ -73,12 +85,12 @@
             <input type="submit" name="<?php echo "cg_{$grid->id}_columns"; ?>" value="<?php echo lang('cg_columns'); ?>" class="cg-columns cg-button cg-icon-circle-triangle-s ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon ui-button-text-icon-primary" />
             <div class="cg-columns-list<?php echo $grid->show_col_list ? '' : ' cg-hidden' ?> ui-shadow ui-widget ui-widget-content ui-corner-all">
                 <table cellpadding="0" cellspacing="0" border="0">
-                <?php foreach ($grid->columns as $key => $column): ?>
+                <?php foreach ($grid->columns as $key => $column): if ($column->visible) : ?>
                     <tr>
                         <td><input class="cg-checkbox cg-col-visible" type="checkbox"<?php echo in_array($key, $grid->columns_visible) ? ' checked="checked"' : ''; ?> value="<?php echo $key; ?>" name="<?php echo "cg_{$grid->id}_columns_visible[]"; ?>" id="cg_<?php echo $grid->id; ?>_columns_visible_<?php echo $key; ?>" /></td>
                         <td><label for="cg_<?php echo $grid->id; ?>_columns_visible_<?php echo $key; ?>"><?php echo $column->header; ?></label></td>
                     </tr>
-                <?php endforeach ?>
+                <?php endif; endforeach ?>
                 </table>
                 <?php if ($grid->ajax) { ?><noscript><?php } ?>
                     <input type="submit" name="<?php echo "cg_{$grid->id}_columns_list"; ?>" value="<?php echo lang('cg_go'); ?>" class="cg-button cg-button-text-only ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
@@ -146,9 +158,6 @@
                         <span class="cg-clear"></span>
                     </th>
                 <?php endforeach ?>
-                    <?php /*<th class="ui-widget-header cg-command">
-                        <?php echo lang('cg_command'); ?>
-                    </th>*/ ?>
                 </tr>
             </thead>
             <tfoot>
@@ -165,7 +174,7 @@
                                         <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_first') . '" class="cg-pag-first cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></span>' : '<a title="' . lang('cg_page_first') . '" href="' . site_url($grid->first_link) . '" class="cg-pag-first cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></a>'; ?>
                                         <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_prev') . '" class="cg-pag-prev cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></span>' : '<a title="' . lang('cg_page_prev') . '" href="' . site_url($grid->prev_link) . '" class="cg-pag-prev cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></a>'; ?>
                                         <?php foreach ($grid->page_links as $page_nr => $url) { ?>
-                                            <?php echo ($page_nr == $grid->page_curr) ? '<span class="cg-pag cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></span>' : '<a href="' . site_url($url) . '" class="cg-pag cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></a>'; ?>
+                                            <?php echo ($page_nr == $grid->page_curr) ? '<span class="cg-pag cg-pag-nr cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></span>' : '<a href="' . site_url($url) . '" class="cg-pag cg-pag-nr ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></a>'; ?>
                                         <?php } ?>
                                         <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_next') . '" class="cg-pag-next cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></span>' : '<a title="' . lang('cg_page_next') . '" href="' . site_url($grid->next_link) . '" class="cg-pag-next cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></a>'; ?>
                                         <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_last') . '" class="cg-pag-last cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></span>' : '<a title="' . lang('cg_page_last') . '" href="' . site_url($grid->last_link) . '" class="cg-pag-last cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></a>'; ?>
@@ -201,8 +210,36 @@
                             <?php echo form_hidden('cg_' . $grid->id . '_filter_op_' . $key, '='); ?>
                             <?php echo form_dropdown('cg_' . $grid->id . '_filter_' . $key, $column->filter_data, isset($grid->filters[$key]) ? $grid->filters[$key]['value'] : '', 'class="cg-filter ui-widget-content"'); ?>
                         <?php } else { ?>
-                            <?php echo form_dropdown('cg_' . $grid->id . '_filter_op_' . $key, $grid->filter_operators, isset($grid->filters[$key]) ? $grid->filters[$key]['operator'] : '=', 'class="ui-widget-content"'); ?>
-                            <?php echo form_input('cg_' . $grid->id . '_filter_' . $key, isset($grid->filters[$key]) ? $grid->filters[$key]['value'] : '', 'class="cg-filter ui-widget-content"'); ?>
+                            <?php
+                                // Render filter control by column type
+                                switch ($column->type)
+                                {
+                                    // Boolean
+                                    case 'boolean':
+                                        echo form_dropdown('cg_' . $grid->id . '_filter_' . $key, array('' => lang('cg_filter_all'), '1' => lang('cg_filter_true'), '0' => lang('cg_filter_false')), isset($grid->filters[$key]) ? $grid->filters[$key]['value'] : '', 'class="cg-filter ui-widget-content"');
+                                        echo form_hidden('cg_' . $grid->id . '_filter_op_' . $key, 'eq');
+                                        break;
+
+                                    case 'date':
+                                        echo form_dropdown('cg_' . $grid->id . '_filter_op_' . $key, $grid->date_filter_operators, isset($grid->filters[$key]) ? $grid->filters[$key]['operator'] : '', 'class="ui-widget-content"');
+                                        echo form_input('cg_' . $grid->id . '_filter_' . $key, isset($grid->filters[$key]) ? carbo_format_date($grid->filters[$key]['value'], 'Y-m-d', $column->date_format) : '', 'class="cg-filter cg-datepicker ui-widget-content" data-cg-date-format="' .  $column->date_format . '"');
+                                        break;
+
+                                    case 'datetime':
+                                        echo form_dropdown('cg_' . $grid->id . '_filter_op_' . $key, $grid->date_filter_operators, isset($grid->filters[$key]) ? $grid->filters[$key]['operator'] : '', 'class="ui-widget-content"');
+                                        echo form_input('cg_' . $grid->id . '_filter_' . $key, isset($grid->filters[$key]) ? carbo_format_date($grid->filters[$key]['value'], 'Y-m-d H:i:s', $column->date_format . ' ' . $column->time_format) : '', 'class="cg-filter cg-datetimepicker ui-widget-content" data-cg-date-format="' .  $column->date_format . '" data-cg-time-format="' . $column->time_format . '"');
+                                        break;
+
+                                    case 'time':
+                                        echo form_dropdown('cg_' . $grid->id . '_filter_op_' . $key, $grid->date_filter_operators, isset($grid->filters[$key]) ? $grid->filters[$key]['operator'] : '', 'class="ui-widget-content"');
+                                        echo form_input('cg_' . $grid->id . '_filter_' . $key, isset($grid->filters[$key]) ? carbo_format_date($grid->filters[$key]['value'], 'H:i:s', $column->time_format) : '', 'class="cg-filter cg-timepicker ui-widget-content" data-cg-time-format="' .  $column->time_format . '"');
+                                        break;
+
+                                    default:
+                                        echo form_dropdown('cg_' . $grid->id . '_filter_op_' . $key, $grid->filter_operators, isset($grid->filters[$key]) ? $grid->filters[$key]['operator'] : '', 'class="ui-widget-content"');
+                                        echo form_input('cg_' . $grid->id . '_filter_' . $key, isset($grid->filters[$key]) ? $grid->filters[$key]['value'] : '', 'class="cg-filter ui-widget-content"');
+                                }
+                            ?>
                         <?php } ?>
                     <?php } ?>
                     </td>
@@ -218,14 +255,17 @@
                     <?php foreach ($grid->commands as $command) if ($command['grid']) { // Generate command columns ?>
                         <td class="cg-data cg-command ui-widget-content">
                         <?php
-                            switch ($command['type'])
-                            {
-                                case 'link':
-                                    echo anchor(rtrim($command['url'], '/') . '/' . $data_id, $command['text'], 'title="' . $command['text'] . '" class="ui-icon ui-icon-' . $command['icon'] . ' cg-command cg-icon-button"');
-                                    break;
-                                default:
-                                    echo form_submit('cg_' . $grid->id . '_command_' . $command['name'], $data_id, 'title="' . $command['text'] . '" class="ui-icon ui-icon-' . $command['icon'] . ' cg-command cg-icon-button"');
-                            }
+                            if ($grid->check_command($command, $data_row))
+                                switch ($command['type'])
+                                {
+                                    case 'link':
+                                        echo anchor(rtrim($command['url'], '/') . '/' . $data_id, $command['text'], 'title="' . $command['text'] . '" class="ui-icon ui-icon-' . $command['icon'] . ' cg-command cg-icon-button"');
+                                        break;
+                                    default:
+                                        echo form_submit('cg_' . $grid->id . '_command_' . $command['name'], $data_id, 'title="' . $command['text'] . '" class="ui-icon ui-icon-' . $command['icon'] . ' cg-command cg-icon-button"');
+                                }
+                            else
+                                echo '&nbsp;';
                         ?>
                         </td>
                     <?php } ?>
@@ -250,6 +290,14 @@
 
                                     case 'date':
                                         echo carbo_format_date($data_cell, 'Y-m-d', $column->date_format);
+                                        break;
+
+                                    case 'datetime':
+                                        echo carbo_format_date($data_cell, 'Y-m-d H:i:s', $column->date_format . ' ' . $column->time_format);
+                                        break;
+
+                                    case 'time':
+                                        echo carbo_format_date($data_cell, 'H:i:s', $column->time_format);
                                         break;
 
                                     case 'url':
@@ -288,7 +336,7 @@
                 <?php if ($grid->show_empty_rows AND $i < $grid->limit) for ($j = $i; $j < $grid->limit; $j++) { ?>
                 <tr class="<?php echo (($j % 2) ? 'even' : 'odd') . (($j == 0) ? ' first' : '') . (($j == $grid->limit - 1) ? ' last' : ''); ?>">
                     <td class="cg-empty cg-select ui-widget-content"><input type="checkbox" style="visibility:hidden;" /></td>
-                    <?php for ($k = 0; $k < count($grid->columns) + $command_nr; $k++) { ?>
+                    <?php for ($k = 0; $k < $column_nr + $command_nr; $k++) { ?>
                     <td class="cg-empty ui-widget-content">&nbsp;</td>
                     <?php } ?>
                 </tr>

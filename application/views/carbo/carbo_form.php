@@ -17,7 +17,19 @@
 <script type="text/javascript">
     if (cfSettings == undefined) var cfSettings = {};
     cfSettings['<?php echo $form->id; ?>'] = {
-        baseUrl: '<?php echo base_url() . ($this->config->item('index_page') ? ($this->config->item('index_page') . '/') : ''); ?>'
+        baseUrl: '<?php echo base_url() . ($this->config->item('index_page') ? ($this->config->item('index_page') . '/') : ''); ?>',
+        monthNames: ["<?php echo implode('","', $form->month_names); ?>"],
+        monthNamesShort: ["<?php echo implode('","', $form->month_names_short); ?>"],
+        dayNames: ["<?php echo implode('","', $form->day_names); ?>"],
+        dayNamesShort: ["<?php echo implode('","', $form->day_names_short); ?>"],
+        dayNamesMin: ["<?php echo implode('","', $form->day_names_min); ?>"],
+        timeOnlyTitle: '<?php echo lang('cg_time_only_title'); ?>',
+        timeText: '<?php echo lang('cg_time'); ?>',
+        hourText: '<?php echo lang('cg_hour'); ?>',
+        minuteText: '<?php echo lang('cg_minute'); ?>',
+        secondText: '<?php echo lang('cg_second'); ?>',
+        currentText: '<?php echo lang('cg_now'); ?>',
+        closeText: '<?php echo lang('cg_done'); ?>'
     };
 </script>
 
@@ -124,19 +136,29 @@
 
             // Text
             case 'textarea':
-                //echo '<div class="cg-left cg-label-div">' . "\n";
                 echo form_label($column->name, 'cg_field_' . $key) . "\n";
-                //echo '</div>' . "\n";
-                //echo '<div class="cg-left cg-input-div">' . "\n";
                 echo form_textarea('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="ui-widget-content"') . "\n";
-                //echo '</div>' . "\n";
                 echo '<div class="cg-clear"></div>' . "\n";
             break;
 
             // Date
             case 'datepicker':
                 echo form_label($column->name, 'cg_field_' . $key) . "\n";
-                echo form_input('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long cg-datepicker ui-widget-content"') . "\n";
+                echo form_input('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long cg-datepicker ui-widget-content" data-cg-date-format="' .  $column->date_format . '"') . "\n";
+                echo '<div class="cg-clear"></div>' . "\n";
+            break;
+
+            // Datetime
+            case 'datetimepicker':
+                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo form_input('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long cg-datetimepicker ui-widget-content" data-cg-date-format="' .  $column->date_format . '" data-cg-time-format="' . $column->time_format . '"') . "\n";
+                echo '<div class="cg-clear"></div>' . "\n";
+            break;
+
+            // Time
+            case 'timepicker':
+                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo form_input('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long cg-timepicker ui-widget-content" data-cg-time-format="' . $column->time_format . '"') . "\n";
                 echo '<div class="cg-clear"></div>' . "\n";
             break;
 
@@ -148,10 +170,10 @@
                 echo '<div class="cg-clear"></div>' . "\n";
                 if ($form->formdata[$key])
                 {
-                    echo form_label('&nbsp;', 'cg_field_' . $key) . "\n";
-                    echo '<span>' . $form->formdata[$key] . '</span>';
-                    echo '<input type="submit" value="1" name="cg_delete_file_' . $key . '" class="ui-icon ui-icon-trash cg-icon-button" />';
-                    echo '<div class="cg-clear"></div>' . "\n";
+                    echo '<table cellpadding="0" cellspacing="0" class="cg-files"><tr>';
+                    echo '<td class="ui-widget-content">' . $form->formdata[$key] . '</td>';
+                    echo '<td class="ui-widget-content"><input type="submit" value="1" name="cg_delete_file_' . $key . '" class="ui-icon ui-icon-trash cg-icon-button" /></td>';
+                    echo '</tr></table>' . "\n";
                 }
             break;
         }

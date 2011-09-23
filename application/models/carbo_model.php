@@ -2,28 +2,31 @@
 
 class Carbo_model extends CI_Model
 {
-    /** @todo
-     *
-     */
-
     // Types
     private $types = array(
-        1 => 'integer',
-        2 => 'string',
-        3 => 'boolean',
-        4 => '1-n',
-        5 => 'text',
-        6 => 'multilang',
-        7 => 'n-m',
-        8 => 'date',
-        9 => 'file'
+        1   => 'integer',
+        2   => 'string',
+        3   => 'boolean',
+        4   => '1-n',
+        5   => 'text',
+        6   => 'multilang',
+        7   => 'n-m',
+        8   => 'date',
+        9   => 'datetime',
+        10  => 'file'
     );
 
+    /**
+     * Constructor
+    **/
     function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Get table dropdown
+    **/
     function get_table_dropdown($table, $id_name, $field_main, $type, $language_id = NULL, $filters = array())
     {
         $data = array("" => lang("cg_select"));
@@ -44,6 +47,9 @@ class Carbo_model extends CI_Model
         return $data;
     }
 
+    /**
+     * Get items
+    **/
     function get_items($table, $id_name, $fields = NULL, $item_id = NULL, $filters = array(), $limit = NULL, $offset = 0, $order = NULL, $ref_ids = FALSE)
     {
         $data = array();
@@ -156,6 +162,9 @@ class Carbo_model extends CI_Model
         return $data;
     }
 
+    /**
+     * Get item
+    **/
     function get_item($table, $id_name, $fields, $item_id)
     {
         $data = $this->get_items($table, $id_name, $fields, $item_id, array(), NULL, 0, NULL, TRUE);
@@ -163,6 +172,9 @@ class Carbo_model extends CI_Model
         return reset($data);
     }
 
+    /**
+     * Get duplicate
+    **/
     function get_duplicate($table, $id_name, $field, $value, $item_id = NULL)
     {
         if (!is_null($item_id))
@@ -182,6 +194,9 @@ class Carbo_model extends CI_Model
         return TRUE;
     }
 
+    /**
+     * Count items
+    **/
     function count_items($table, $id_name, $fields, $filters = array())
     {
         if (count($fields))
@@ -242,7 +257,10 @@ class Carbo_model extends CI_Model
         return 0;
     }
 
-    function save_item($table, $id_name, $fields, $language_id, $item_id = NULL, $item_data = NULL)
+    /**
+     * Save item
+    **/
+    function save_item($table, $id_name, $fields, $language_id, $item_id = NULL, $item_data = NULL, $filters = array())
     {
         if (count($fields))
         {
@@ -251,6 +269,7 @@ class Carbo_model extends CI_Model
             foreach ($fields as $key => $field)
             {
                 $value = $this->input->post("cg_field_" . $key);
+                $value = ($value === FALSE) ? $field->form_default : $value;
                 //$value = $values[$key];
                 switch ($field->type)
                 {
@@ -262,8 +281,18 @@ class Carbo_model extends CI_Model
                     // Date
                     case 'date':
                         // Convert to MySQL date
-                        //$table_data[$field->db_name] = date('Y-m-d', carbo_parse_date($value, $field->date_format));
                         $table_data[$field->db_name] = $value ? carbo_format_date($value, $field->date_format, 'Y-m-d') : NULL;
+                        break;
+
+                    case 'datetime':
+                        // Convert to MySQL datetime
+                        $table_data[$field->db_name] = $value ? carbo_format_date($value, $field->date_format . ' ' . $field->time_format, 'Y-m-d H:i:s') : NULL;
+                        break;
+
+                    // Date
+                    case 'time':
+                        // Convert to MySQL time
+                        $table_data[$field->db_name] = $value ? carbo_format_date($value, $field->time_format, 'H:i:s') : NULL;
                         break;
 
                     // File
@@ -301,6 +330,7 @@ class Carbo_model extends CI_Model
             {
                 // Update the item
                 $this->db->where($id_name, $item_id);
+                $this->set_filters($filters);
                 $this->db->update($table, $table_data);
             }
 
@@ -310,22 +340,28 @@ class Carbo_model extends CI_Model
         return FALSE;
     }
 
-    function delete_items($table, $id_name, $item_ids = array())
+    /**
+     * Delete items
+    **/
+    function delete_items($table, $id_name, $item_ids = array(), $filters = array())
     {
         // @todo - Cascade
         // Delete the rows
-        $this->db
-            ->where_in($id_name, $item_ids)
-            ->delete($table);
+        $this->db->where_in($id_name, $item_ids);
+        $this->set_filters($filters);
+        $this->db->delete($table);
     }
 
+    /**
+     * Set filters
+    **/
     function set_filters($filters = array())
     {
         foreach ($filters as $filter)
         {
             if (!isset($filter['operator']))
             {
-                $filter['operator'] = '=';
+                $filter['operator'] = 'eq';
             }
             switch ($filter['operator'])
             {

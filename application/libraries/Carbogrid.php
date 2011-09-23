@@ -4,14 +4,14 @@ class Carbogrid
 {
     /**
      * @todo
-     * Filters control by type
-     * Parse date + format date
-     * Datetimepicker
-     * Allow add/edit/delete conditional
+     * Check file upload
+     *
      * Go to page + page size textfield
      *
      * After add/edit go to page and higlight
      * Horizontal scrolling
+     * 
+     * Multipage select
     **/
 
     public $id = 'datagrid';
@@ -110,6 +110,7 @@ class Carbogrid
         'allow_sort'        => TRUE,
         // Date type settings
         'date_format'       => 'm/d/Y',
+        'time_format'       => 'H:i',
         // URL type settings
         'url_target'        => '_self',
         // File upload settings
@@ -152,7 +153,8 @@ class Carbogrid
         'confirm_yes'       => '',
         'confirm_no'        => '',
         'dialog_save'       => '',
-        'dialog_cancel'     => ''
+        'dialog_cancel'     => '',
+        'filters'           => array()
     );
     // Default dialog settings
     public $dialog = array(
@@ -164,6 +166,9 @@ class Carbogrid
         'visible'           => FALSE
     );
 
+    /**
+     * Constructor
+    **/
     function __construct($params = array())
     {
         $this->CI = & get_instance();
@@ -175,10 +180,11 @@ class Carbogrid
         $this->CI->load->model('Carbo_model');
 
         $this->filter_operators = array(
+            ''              => lang('cg_filter_all'),
             'like'          => lang('cg_filter_like'),
             'notlike'       => lang('cg_filter_not_like'),
-            'starts'            => lang('cg_filter_starts'),
-            'ends'        => lang('cg_filter_ends'),
+            'starts'        => lang('cg_filter_starts'),
+            'ends'          => lang('cg_filter_ends'),
             'eq'            => '=',
             'noteq'         => '!=',
             'lt'            => '<',
@@ -187,6 +193,47 @@ class Carbogrid
             'gte'           => '>=',
             //'in'            => lang('cg_filter_in'),
             //'not_in'        => lang('cg_filter_not_in'),
+        );
+        $this->date_filter_operators = array(
+            ''              => lang('cg_filter_all'),
+            'eq'            => '=',
+            'noteq'         => '!=',
+            'lt'            => '<',
+            'lte'           => '<=',
+            'gt'            => '>',
+            'gte'           => '>='
+        );
+
+        $this->month_names = array(
+            lang('cg_january'), lang('cg_february'), lang('cg_march'),
+            lang('cg_april'), lang('cg_may'), lang('cg_june'),
+            lang('cg_july'), lang('cg_august'), lang('cg_september'),
+            lang('cg_october'), lang('cg_november'), lang('cg_december')
+        );
+
+        $this->month_names_short = array(
+            lang('cg_january_short'), lang('cg_february_short'), lang('cg_march_short'),
+            lang('cg_april_short'), lang('cg_may_short'), lang('cg_june_short'),
+            lang('cg_july_short'), lang('cg_august_short'), lang('cg_september_short'),
+            lang('cg_october_short'), lang('cg_november_short'), lang('cg_december_short')
+        );
+
+        $this->day_names = array(
+            lang('cg_sunday'), lang('cg_monday'), lang('cg_tuesday'),
+            lang('cg_wednesday'), lang('cg_thursday'), lang('cg_friday'),
+            lang('cg_saturday')
+        );
+
+        $this->day_names_short = array(
+            lang('cg_sunday_short'), lang('cg_monday_short'), lang('cg_tuesday_short'),
+            lang('cg_wednesday_short'), lang('cg_thursday_short'), lang('cg_friday_short'),
+            lang('cg_saturday_short')
+        );
+
+        $this->day_names_min = array(
+            lang('cg_sunday_min'), lang('cg_monday_min'), lang('cg_tuesday_min'),
+            lang('cg_wednesday_min'), lang('cg_thursday_min'), lang('cg_friday_min'),
+            lang('cg_saturday_min')
         );
 
         // Get selected ids
@@ -280,7 +327,7 @@ class Carbogrid
             }
             else
             {
-                $this->columns[$key]['unique_name'] = $this->table . '_' . $this->columns[$key]['db_name'];
+                $this->columns[$key]['unique_name'] = /*$this->table . '_' . */$this->columns[$key]['db_name'];
                 $this->columns[$key]['where_name'] = $this->table . '.' . $this->columns[$key]['db_name'];
             }
 
@@ -328,7 +375,7 @@ class Carbogrid
                 'dialog_save'   => lang('cg_save'),
                 'dialog_cancel' => lang('cg_cancel')
             );
-            $this->commands['add'] = isset($this->commands['add']) ? array_merge($this->commands['add'], $defaults) : $defaults;
+            $this->commands['add'] = isset($this->commands['add']) ? array_merge($defaults, $this->commands['add']) : $defaults;
         }
         else
         {
@@ -344,7 +391,7 @@ class Carbogrid
                 'dialog_save'   => lang('cg_save'),
                 'dialog_cancel' => lang('cg_cancel')
             );
-            $this->commands['edit'] = isset($this->commands['edit']) ? array_merge($this->commands['edit'], $defaults) : $defaults;
+            $this->commands['edit'] = isset($this->commands['edit']) ? array_merge($defaults, $this->commands['edit']) : $defaults;
         }
         else
         {
@@ -365,7 +412,7 @@ class Carbogrid
                 'confirm_yes'   => lang('cg_yes'),
                 'confirm_no'    => lang('cg_no')
             );
-            $this->commands['delete'] = isset($this->commands['delete']) ? array_merge($this->commands['delete'], $defaults) : $defaults;
+            $this->commands['delete'] = isset($this->commands['delete']) ? array_merge($defaults, $this->commands['delete']) : $defaults;
         }
         else
         {
@@ -465,7 +512,7 @@ class Carbogrid
                     }
                     else
                     {
-                        $this->CI->{$command['function']}($arg);
+                        $this->CI->{$command['function']}($arg, $command['filters']);
                     }
                 }
                 else
@@ -477,11 +524,11 @@ class Carbogrid
                             break;
 
                         case 'edit':
-                            $this->form($arg);
+                            $this->form($arg, $command['filters']);
                             break;
 
                         case 'delete':
-                            $this->delete($arg);
+                            $this->delete($arg, $command['filters']);
                             break;
 
                         // Custom command
@@ -552,10 +599,13 @@ class Carbogrid
                     if (($value = $this->CI->input->post('cg_' . $this->id . '_filter_' . $key)) !== FALSE && ($value !== ''))
                     {
                         $op = $this->CI->input->post('cg_' . $this->id . '_filter_op_' . $key);
-                        $this->filters[$key]['field'] = $column->where_name;
-                        $this->filters[$key]['operator'] = $op;
-                        $this->filters[$key]['value'] = $value;
-                        $this->filter_string .= $key . ':' . $this->encode($value) . ':' . $op . '_';
+                        if ($op)
+                        {
+                            $this->filters[$key]['field'] = $column->where_name;
+                            $this->filters[$key]['operator'] = $op;
+                            $this->filters[$key]['value'] = $this->parse_filter_value($column, $value);
+                            $this->filter_string .= $key . ':' . $this->encode($value) . ':' . $op . '_';
+                        }
                     }
                 }
                 $this->filter_string = $this->filter_string ? rtrim($this->filter_string, '_') : 'all';
@@ -576,7 +626,7 @@ class Carbogrid
                     if (array_key_exists($f[0], $this->headers) AND isset($f[1]) AND ($f[1] !== ''))
                     {
                         $filt[$f[0]]['field'] = $this->columns[$f[0]]->where_name;
-                        $filt[$f[0]]['value'] = $this->decode($f[1]);
+                        $filt[$f[0]]['value'] = $this->parse_filter_value($this->columns[$f[0]], $this->decode($f[1]));
                         $filt[$f[0]]['operator'] = isset($f[2]) ? $f[2] : 'eq';
                     }
                 }
@@ -591,7 +641,6 @@ class Carbogrid
         {
             $this->filters = array();
         }
-
         // ---------------------------------------------------------------------
 
         // Set order
@@ -642,7 +691,9 @@ class Carbogrid
         }
     }
 
-
+    /**
+     * Get data
+    **/
     function get_data()
     {
         $filters = array();
@@ -657,11 +708,13 @@ class Carbogrid
             $f['operator'] = isset($filter['operator']) ? $filter['operator'] : 'eq';
             $filters[] = $f;
         }
-
         $this->total = $this->CI->Carbo_model->count_items($this->table, $this->table_id_name, $this->columns, $filters);
         $this->data = $this->CI->Carbo_model->get_items($this->table, $this->table_id_name, $this->columns, NULL, $filters, $this->limit, $this->offset, $this->order);
     }
 
+    /**
+     * Render
+    **/
     function render()
     {
         // Calculate page numbers and pagination links
@@ -726,7 +779,10 @@ class Carbogrid
         }
     }
 
-    function form($item_id = NULL)
+    /**
+     * Form
+    **/
+    function form($item_id = NULL, $filters = array())
     {
         if ($this->CI->input->post('cg_' . $this->id . '_dialog_no') !== FALSE)
         {
@@ -744,6 +800,12 @@ class Carbogrid
             'language_id' => $this->language_id,
             'is_ajax' => $this->is_ajax,
             'columns' => $this->columns,
+            'filters' => $this->convert_filters($filters),
+            'month_names' => $this->month_names,
+            'month_names_short' => $this->month_names_short,
+            'day_names' => $this->day_names,
+            'day_names_short' => $this->day_names_short,
+            'day_names_min' => $this->day_names_min,
             'nested' => TRUE
         );
 
@@ -772,12 +834,18 @@ class Carbogrid
         return FALSE;
     }
 
-    function delete($item_ids)
+    /**
+     * Delete
+    **/
+    function delete($item_ids, $filters = array())
     {
-        //$item_ids = explode(':', $item_ids);
-        $this->CI->Carbo_model->delete_items($this->table, $this->table_id_name, $item_ids);
+        $filt = $this->convert_filters($filters);
+        $this->CI->Carbo_model->delete_items($this->table, $this->table_id_name, $item_ids, $filt);
     }
 
+    /**
+     * Create order url
+    **/
     function create_order_url($params)
     {
         //$order = array_merge($this->order, $params['order']);
@@ -809,11 +877,116 @@ class Carbogrid
         return $this->url . $this->params_before . $grid_param . $this->params_after . '#' . $order_str;
     }
 
+    /**
+     * Convert filters
+    **/
+    function convert_filters($filters)
+    {
+        $filt = array();
+        foreach ($filters as $filter)
+        {
+            $f['field'] = $this->columns[$filter['field']]->where_name;
+            $f['value'] = $filter['value'];
+            $f['operator'] = isset($filter['operator']) ? $filter['operator'] : 'eq';
+            $filt[] = $f;
+        }
+        return $filt;
+    }
+
+    /**
+     * Check command
+    **/
+    function check_command($command, $row)
+    {
+        $valid = TRUE;
+        foreach ($command['filters'] as $filter)
+        {
+            $field = $row->{$this->columns[$filter['field']]->unique_name};
+            $value = $filter['value'];
+            if (!isset($filter['operator']))
+            {
+                $filter['operator'] = 'eq';
+            }
+            switch ($filter['operator'])
+            {
+                case 'noteq':
+                    $valid = $field != $value;
+                    break;
+                case 'lt':
+                    $valid = $field < $value;
+                    break;
+                case 'lte':
+                    $valid = $field <= $value;
+                    break;
+                case 'gt':
+                    $valid = $field > $value;
+                    break;
+                case 'gte':
+                    $valid = $field >= $value;
+                    break;
+                case 'in':
+                    $valid = (array_search($field, $value) !== FALSE);
+                    break;
+                case 'notin':
+                    $valid = (array_search($field, $value) === FALSE);
+                    break;
+                case 'like':
+                    $valid = (strpos($field, $value) !== FALSE);
+                    break;
+                case 'notlike':
+                    $valid = (strpos($field, $value) === FALSE);
+                    break;
+                case 'starts':
+                    $valid = (strpos($field, $value) === 0);
+                    break;
+                case 'ends':
+                    $valid = (strpos($field, $value) === (strlen($field) - strlen($value)));
+                    break;
+
+                default:
+                    $valid = $field == $value;
+            }
+            if (!$valid) return FALSE;
+        }
+        return $valid;
+    }
+
+    /**
+     * Parse filter value
+    **/
+    function parse_filter_value($column, $value)
+    {
+        switch ($column->type)
+        {
+            // Boolean
+            //case 'boolean':
+                //return;
+
+            case 'date':
+                return carbo_format_date($value, $column->date_format, 'Y-m-d');
+
+            case 'datetime':
+                return carbo_format_date($value, $column->date_format . ' ' . $column->time_format, 'Y-m-d H:i:s');
+
+            case 'time':
+                return carbo_format_date($value, $column->time_format, 'H:i:s');
+
+            default:
+                return $value;
+        }
+    }
+
+    /**
+     * Encode
+    **/
     function encode($string)
     {
         return strtr(base64_encode($string), '+/=', '%.~');
     }
 
+    /**
+     * Decode
+    **/
     function decode($string)
     {
         return base64_decode(strtr($string, '%.~', '+/='));

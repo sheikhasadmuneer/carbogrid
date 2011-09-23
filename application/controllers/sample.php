@@ -19,6 +19,7 @@ class Sample extends CI_Controller
                 'header' => 'Username',
                 'group' => 'User',
                 'required' => TRUE,
+                'unique' => TRUE,
                 'form_control' => 'text_long',
                 'type' => 'string'),
             1 => array(
@@ -27,49 +28,90 @@ class Sample extends CI_Controller
                 'header' => 'Age',
                 'group' => 'User',
                 'required' => TRUE,
+                'visible' => FALSE,
                 'form_control' => 'text_short',
                 'type' => 'integer'),
             2 => array(
-                'name' => 'Birthday',
-                'db_name' => 'birthday',
-                'header' => 'Birthday',
-                'group' => 'User',
-                'form_control' => 'datepicker',
-                'type' => 'date'),
-            3 => array(
                 'name' => 'Active',
                 'db_name' => 'active',
                 'header' => 'Active',
                 'group' => 'User',
-                'allow_filter' => FALSE,
+                //'allow_filter' => FALSE,
                 'form_control' => 'checkbox',
                 'type' => 'boolean'),
+            3 => array(
+                'name' => 'Start Time',
+                'db_name' => 'start_time',
+                'header' => 'Start Time',
+                'group' => 'Range',
+                'date_format' => 'Y. M d.',
+                'time_format' => 'h:i A',
+                'form_default' => date('Y. M d. h:i A'),
+                'form_control' => 'datetimepicker',
+                'type' => 'datetime'),
             4 => array(
+                'name' => 'End Time',
+                'db_name' => 'end_time',
+                'header' => 'End Time',
+                'group' => 'Range',
+                'date_format' => 'Y.m.d',
+                'form_control' => 'datetimepicker',
+                'type' => 'datetime'),
+            5 => array(
                 'name' => 'City',
                 'db_name' => 'city',
                 'header' => 'City',
                 'group' => 'User',
-                'allow_filter' => FALSE,
-                'ref_table_db_name' => 'cm_city',
+                //'allow_filter' => FALSE,
+                'ref_table_db_name' => 'city',
                 'ref_field_db_name' => 'name',
                 'ref_field_type' => 'string',
                 'form_control' => 'dropdown',
                 'type' => '1-n'),
-            5 => array(
+            6 => array(
                 'name' => 'Comment',
                 'db_name' => 'opinion',
                 'header' => 'Comment',
                 'group' => 'Comment',
                 'form_control' => 'textarea',
-                'type' => 'text')
+                'type' => 'text'),
+            7 => array(
+                'name' => 'IP',
+                'db_name' => 'ip_address',
+                'header' => 'IP',
+                'visible' => FALSE,
+                'form_default' => $this->input->ip_address(),
+                'form_visible' => FALSE,
+                'type' => 'string'),
+            8 => array(
+                'name' => 'Time',
+                'db_name' => 'time',
+                'header' => 'Time',
+                'group' => 'Comment',
+                'form_control' => 'timepicker',
+                'type' => 'time'),
+            9 => array(
+                'name' => 'Picture',
+                'db_name' => 'pic',
+                'header' => 'Picture',
+                'group' => 'Comment',
+                'form_control' => 'file',
+                'type' => 'file')
         );
+
+        // Allow edit/delete only for items with the current IP address
+        $commands['delete']['filters'] = array(array('field' => 7, 'value' => $this->input->ip_address()));
+        $commands['edit']['filters'] = array(array('field' => 7, 'value' => $this->input->ip_address()));
+        // Don't show multiple delete button
+        $commands['delete']['toolbar'] = FALSE;
 
         $params = array(
             'id' => 'users',
-            'table' => 'cm_user',
+            'table' => 'user',
             'url' => 'sample/single',
             'uri_param' => $grid,
             'columns' => $columns,
+            'commands' => $commands,
             'ajax' => TRUE
         );
 
@@ -95,7 +137,7 @@ class Sample extends CI_Controller
 
             if (count($ids))
             {
-                $this->db->set('active', 1)->where_in('id', $ids)->update('cm_user');
+                $this->db->set('active', 1)->where_in('id', $ids)->update('user');
             }
         }
         if ($this->input->post('unactivate'))
@@ -104,7 +146,7 @@ class Sample extends CI_Controller
 
             if (count($ids))
             {
-                $this->db->set('active', 0)->where_in('id', $ids)->update('cm_user');
+                $this->db->set('active', 0)->where_in('id', $ids)->update('user');
             }
         }
 
@@ -118,15 +160,6 @@ class Sample extends CI_Controller
                 'form_control' => 'text_long',
                 'type' => 'string'),
             1 => array(
-                'name' => 'Birthday',
-                'db_name' => 'birthday',
-                'header' => 'Birthday',
-                'group' => 'User',
-                'form_default' => '01/01/1980',
-                'form_control' => 'datepicker',
-                'date_format' => 'm/d/Y h:i A',
-                'type' => 'date'),
-            2 => array(
                 'name' => 'Active',
                 'db_name' => 'active',
                 'header' => 'Active',
@@ -134,19 +167,36 @@ class Sample extends CI_Controller
                 'allow_filter' => FALSE,
                 'form_visible' => FALSE,
                 'form_control' => 'checkbox',
-                'type' => 'boolean')
+                'type' => 'boolean'),
+            2 => array(
+                'name' => 'Start Time',
+                'db_name' => 'start_time',
+                'header' => 'Start Time',
+                'group' => 'Period',
+                'date_format' => 'm/d/Y',
+                'form_default' => date('m/d/Y H:i'),
+                'form_control' => 'datetimepicker',
+                'type' => 'date'),
+            3 => array(
+                'name' => 'End Time',
+                'db_name' => 'end_time',
+                'header' => 'End Time',
+                'group' => 'Period',
+                'date_format' => 'm/d/Y',
+                'form_control' => 'datetimepicker',
+                'type' => 'date')
         );
 
         $params = array(
             'id' => 'users1',
-            'table' => 'cm_user',
+            'table' => 'user',
             'url' => 'sample/multiple',
             'uri_param' => $grid1,
             'params_after' => $grid2 . '/' . $grid3,
             'columns' => $columns,
             'order' => array(0 => 'desc'),
             'hard_filters' => array(
-                array('field' => 2, 'value' => FALSE)
+                array('field' => 1, 'value' => FALSE)
             ),
             'allow_add' => FALSE,
             'allow_edit' => FALSE,
@@ -193,7 +243,7 @@ class Sample extends CI_Controller
 
         $params = array(
             'id' => 'users2',
-            'table' => 'cm_user',
+            'table' => 'user',
             'url' => 'sample/multiple',
             'uri_param' => $grid2,
             'params_before' => $grid1,
@@ -229,14 +279,7 @@ class Sample extends CI_Controller
                 'required' => TRUE,
                 'form_control' => 'text_long',
                 'type' => 'string'),
-            2 => array(
-                'name' => 'Birthday',
-                'db_name' => 'birthday',
-                'header' => 'Birthday',
-                'group' => 'User',
-                'form_control' => 'datepicker',
-                'type' => 'date'),
-            3 => array(
+            1 => array(
                 'name' => 'Active',
                 'db_name' => 'active',
                 'header' => 'Active',
@@ -244,33 +287,48 @@ class Sample extends CI_Controller
                 'allow_filter' => FALSE,
                 'form_control' => 'checkbox',
                 'type' => 'boolean'),
-            4 => array(
+            2 => array(
                 'name' => 'City',
                 'db_name' => 'city',
                 'header' => 'City',
                 'group' => 'User',
                 'allow_filter' => FALSE,
-                'ref_table_db_name' => 'cm_city',
+                'ref_table_db_name' => 'city',
                 'ref_field_db_name' => 'name',
                 'ref_field_type' => 'string',
                 'form_control' => 'dropdown',
                 'type' => '1-n'),
-            5 => array(
+            3 => array(
                 'name' => 'Comment',
                 'db_name' => 'opinion',
                 'header' => 'Comment',
                 'group' => 'Comment',
                 'form_control' => 'textarea',
-                'type' => 'text')
+                'type' => 'text'),
+            4 => array(
+                'name' => 'IP',
+                'db_name' => 'ip_address',
+                'header' => 'IP',
+                'visible' => FALSE,
+                'form_default' => $this->input->ip_address(),
+                'form_visible' => FALSE,
+                'type' => 'string')
         );
+
+        // Allow edit/delete only for items with the current IP address
+        $commands['delete']['filters'] = array(array('field' => 4, 'value' => $this->input->ip_address()));
+        $commands['edit']['filters'] = array(array('field' => 4, 'value' => $this->input->ip_address()));
+        // Don't show multiple delete button
+        $commands['delete']['toolbar'] = FALSE;
 
         $params = array(
             'id' => 'users',
-            'table' => 'cm_user',
+            'table' => 'user',
             'url' => 'sample/multiple',
             'uri_param' => $grid3,
             'params_before' => $grid1 . '/' . $grid2,
             'columns' => $columns,
+            'commands' => $commands,
             'ajax' => TRUE,
             'ajax_history' => FALSE
         );

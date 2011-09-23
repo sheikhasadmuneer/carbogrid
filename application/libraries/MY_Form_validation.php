@@ -2,7 +2,8 @@
 
 class MY_Form_validation extends CI_Form_validation {
 
-    function __construct() {
+    function __construct()
+    {
 
         parent::__construct();
 
@@ -11,13 +12,18 @@ class MY_Form_validation extends CI_Form_validation {
         $this->CI->load->language('carbo');
     }
 
-    function carbo_check_unique($value, $str) {
+    /**
+     * Check unique
+    **/
+    function carbo_check_unique($value, $str)
+    {
         $str = explode(':', $str);
         $table = $str[0];
-        $field = $str[1];
-        $item_id = isset($str[2]) ? $str[2] : NULL;
+        $id_name = $str[1];
+        $field = $str[2];
+        $item_id = isset($str[3]) ? $str[3] : NULL;
 
-        if ($this->CI->Carbo_model->get_duplicate($table, 'id', $field, $value, $item_id))
+        if ($this->CI->Carbo_model->get_duplicate($table, $id_name, $field, $value, $item_id))
         {
             return TRUE;
         }
@@ -28,11 +34,43 @@ class MY_Form_validation extends CI_Form_validation {
         }
     }
 
+    /**
+     * Check upload
+    **/
     function carbo_check_upload($value, $str)
     {
-        return $this->CI->carboform->check_upload($value, $str);
+        //return $this->CI->carboform->check_upload($value, $str);
+        $str = explode(':', $str);
+        $field = $str[0];
+        $upload_path_temp = isset($str[1]) ? $str[1] : './files/temp';
+        $allowed_types = isset($str[2]) ? preg_replace('/\&/', '|', $str[2]) : 'gif|jpg|png';
+        $max_size = isset($str[3]) ? $str[3] : 1024;
+        
+        if (isset($_FILES[$field]) && $_FILES[$field]['name'])
+        {
+            $config['upload_path'] = $upload_path_temp;
+            $config['allowed_types'] = $allowed_types;
+            $config['max_size'] = $max_size;
+
+            $this->CI->load->library('upload', $config);
+
+            if (!$this->CI->upload->do_upload($field))
+            {
+                $this->CI->form_validation->set_message('carbo_check_upload', '%s: ' . $this->CI->upload->display_errors('', ''));
+                return FALSE;
+            }
+            else
+            {
+                $data = $this->CI->upload->data();
+                return $data['file_name'];
+            }
+        }
+        return TRUE;
     }
 
+    /**
+     * Check date
+    **/
     function carbo_check_date($date, $format)
     {
         $this->set_message('carbo_check_date', lang('cg_check_date'));
@@ -42,7 +80,7 @@ class MY_Form_validation extends CI_Form_validation {
             $format = 'm/d/Y';
         }
 
-        $pformat = preg_replace('/([dDjmMnYyGgHhis])/', '%$1', $format);
+        $pformat = preg_replace('/([dDljmMFnYyGgHhAais])/', '%$1', $format);
 
         $ret = carbo_strptime($date, $pformat);
 
@@ -56,11 +94,10 @@ class MY_Form_validation extends CI_Form_validation {
             return FALSE;
         }
 
-        //return date($format, mktime($ret['tm_hour'], $ret['tm_min'], $ret['tm_sec'], $ret['tm_mon'], $ret['tm_mday'], $ret['tm_year']));
         return carbo_format_date($ret, $format, $format);
     }
 
-    function carbo_check_daterange($value, $params)
+    /*function carbo_check_daterange($value, $params)
     {
         $params = explode(':', $params);
         $params[2] = isset($params[2]) ? $params[2] : 'm/d/Y';
@@ -87,36 +124,7 @@ class MY_Form_validation extends CI_Form_validation {
         }
 
         return TRUE;
-    }
-
-    function upload_check($value, $params)
-    {
-        $params = explode(':', $params);
-        $field = $params[0];
-        $types = isset($params[1]) ? $params[1] : 'gif|jpg|png';
-        $max_size = isset($params[2]) ? $params[2] : '1024';
-
-        if (isset($_FILES[$field]) && $_FILES[$field]['name'])
-        {
-            $config['upload_path'] = './files/temp';
-            $config['allowed_types'] = str_replace(',', '|', $types);
-            $config['max_size'] = $max_size;
-            $config['file_name'] = random_string('unique');
-
-            $this->CI->load->library('upload', $config);
-
-            if (!$this->CI->upload->do_upload($field))
-            {
-                $this->set_message('upload_check', $this->CI->upload->display_errors('', ''));
-                return FALSE;
-            }
-            else
-            {
-                $data = $this->CI->upload->data();
-                return $data['file_name'];
-            }
-        }
-    }
+    }*/
 
 }
 

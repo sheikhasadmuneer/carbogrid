@@ -1,3 +1,6 @@
+div {
+    zoom: 1;
+}
 .cg-overlay {
     position: absolute;
     top: 0;

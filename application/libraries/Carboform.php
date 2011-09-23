@@ -9,7 +9,15 @@ class Carboform
 
     public $columns = array();
 
+    public $filters = array();
+
     public $formdata = array();
+
+    public $month_names = array();
+    public $month_names_short = array();
+    public $day_names = array();
+    public $day_names_short = array();
+    public $day_names_min = array();
 
     public $is_ajax = FALSE;
     public $nested = FALSE;
@@ -17,6 +25,9 @@ class Carboform
     private $table = NULL;
     private $table_id_name = 'id';
 
+    /**
+     * Constructor
+    **/
     function __construct($params = array())
     {
         $this->CI = & get_instance();
@@ -46,6 +57,9 @@ class Carboform
         }*/
     }
 
+    /**
+     * Run
+    **/
     function run($validate = FALSE)
     {
         $this->CI->load->library('form_validation');
@@ -70,6 +84,12 @@ class Carboform
                 case 'date':
                     $validation .= "|carbo_check_date[{$column->date_format}]";
                     break;
+                case 'datetime':
+                    $validation .= "|carbo_check_date[{$column->date_format} {$column->time_format}]";
+                    break;
+                case 'time':
+                    $validation .= "|carbo_check_date[{$column->time_format}]";
+                    break;
             }
 
             if (!is_null($column->min_length))
@@ -86,7 +106,7 @@ class Carboform
             }
             if ($column->unique)
             {
-                $validation .= '|carbo_check_unique[' . $table . ':' . $column->db_name . (is_null($this->item_id) ? '' : (':' . $this->item_id)) . ']';
+                $validation .= '|carbo_check_unique[' . $this->table . ':' . $this->table_id_name . ':' . $column->where_name . (is_null($this->item_id) ? '' : (':' . $this->item_id)) . ']';
             }
             if ($column->form_control == 'file')
             {
@@ -110,7 +130,10 @@ class Carboform
                     }
                     $_POST['cg_field_' . $key] = '';
                 }
-                $validation .= '|carbo_check_upload[cg_field_'. $key . ']';
+                $validation .= '|carbo_check_upload[cg_field_'. $key .
+                    ':' . $column->upload_path_temp .
+                    ':' . preg_replace('/\|/', '&', $column->allowed_types) .
+                    ':' . $column->max_size . ']';
             }
 
             $this->CI->form_validation->set_rules('cg_field_' . $key, $column->name, $validation);
@@ -122,7 +145,7 @@ class Carboform
         {
             if ($this->CI->form_validation->run() !== FALSE)
             {
-                $this->CI->Carbo_model->save_item($this->table, $this->table_id_name, $this->columns, $this->language_id, $this->item_id, $item_data);
+                $this->CI->Carbo_model->save_item($this->table, $this->table_id_name, $this->columns, $this->language_id, $this->item_id, $item_data, $this->filters);
                 return TRUE;
             }
         }
@@ -149,6 +172,12 @@ class Carboform
                     case 'date':
                         $this->formdata[$key] = is_null($this->item_id) ? $column->form_default : carbo_format_date($item_data->{$column->unique_name}, 'Y-m-d', $column->date_format);
                         break;
+                    case 'datetime':
+                        $this->formdata[$key] = is_null($this->item_id) ? $column->form_default : carbo_format_date($item_data->{$column->unique_name}, 'Y-m-d H:i:s', $column->date_format . ' ' . $column->time_format);
+                        break;
+                    case 'time':
+                        $this->formdata[$key] = is_null($this->item_id) ? $column->form_default : carbo_format_date($item_data->{$column->unique_name}, 'H:i:s', $column->time_format);
+                        break;
                     case '1-n':
                         $this->formdata[$key] = is_null($this->item_id) ? $column->form_default : $item_data->{$column->unique_name . '_id'};
                         break;
@@ -158,37 +187,14 @@ class Carboform
         return FALSE;
     }
 
+    /**
+     * Render
+    **/
     function render()
     {
         return $this->CI->load->view('carbo/carbo_form', array('form' => $this), TRUE);
     }
 
-    function check_upload($value, $str)
-    {
-        $key = str_replace('cg_field_', '', $str);
-        $column = $this->columns[$key];
-
-        if (isset($_FILES[$str]) && $_FILES[$str]['name'])
-        {
-            $config['upload_path'] = $column->upload_path_temp;//'./files/temp';
-            $config['allowed_types'] = $column->allowed_types;//'gif|jpg|png';
-            $config['max_size'] = $column->max_size;
-
-            $this->CI->load->library('upload', $config);
-
-            if (!$this->CI->upload->do_upload($str))
-            {
-                $this->CI->form_validation->set_message('carbo_check_upload', '%s: ' . $this->CI->upload->display_errors('', ''));
-                return FALSE;
-            }
-            else
-            {
-                $data = $this->CI->upload->data();
-                return $data['file_name'];
-            }
-        }
-        return TRUE;
-    }
 }
 
 /* End of file Carboform.php */

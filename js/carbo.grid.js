@@ -36,7 +36,20 @@ function Carbogrid(id, opt) {
         columnString: 'all',
         orderString: 'none',
         filterString: '',
-        commands: {}
+        commands: {},
+        // Regional
+        monthNames: [],
+        monthNamesShort: [],
+        dayNames: [],
+        dayNamesShort: [],
+        dayNamesMin: [],
+        timeOnlyTitle: "Choose Time",
+        timeText: "Time",
+        hourText: "Hour",
+        minuteText: "Minute",
+        secondText: "Second",
+        currentText: "Now",
+        closeText: "Done"
     };
     var settings = $.extend({}, defaults, opt);
     settings.url = settings.baseUrl + settings.gridUrl;
@@ -245,9 +258,9 @@ function Carbogrid(id, opt) {
             $('.cg-apply-filter', context).click(function() {
                 var filterString = '';
                 $('.cg-filter', context).each(function() {
-                    if ($(this).val()) {
-                        var id = $(this).attr('name').replace('cg_' + shortID + '_filter_', '');
-                        var op = $('select[name=' + 'cg_' + shortID + '_filter_op_' + id + ']').val();
+                    var id = $(this).attr('name').replace('cg_' + shortID + '_filter_', '');
+                    var op = $(':input[name=' + 'cg_' + shortID + '_filter_op_' + id + ']').val();
+                    if (op && $(this).val() !== '') {
                         filterString += id + ':' + encode($(this).val()) + ':' + op + '_';
                     }
                 });
@@ -318,7 +331,7 @@ function Carbogrid(id, opt) {
         $('.cg-pag-prev', context).html($('.cg-pag-prev', context).text()).button({ icons: { primary: 'ui-icon-seek-prev' }, text: false, disabled: $('.cg-pag-prev', context).hasClass('cg-disabled') });
         $('.cg-pag-next', context).html($('.cg-pag-next', context).text()).button({ icons: { primary: 'ui-icon-seek-next' }, text: false, disabled: $('.cg-pag-next', context).hasClass('cg-disabled') });
         $('.cg-pag-last', context).html($('.cg-pag-last', context).text()).button({ icons: { primary: 'ui-icon-seek-end' }, text: false, disabled: $('.cg-pag-last', context).hasClass('cg-disabled') });
-        $('.cg-pag', context).each(function() { $(this).html($(this).text()).button({ disabled: $(this).hasClass('cg-disabled') }); });
+        $('.cg-pag-nr', context).each(function() { $(this).html($(this).text()).button({ disabled: $(this).hasClass('cg-disabled') }); });
         // Init page size change
         $('.cg-page-size', context).change(function() {
             if (settings.ajaxHistory)
@@ -343,6 +356,86 @@ function Carbogrid(id, opt) {
                 $('.cg-col-visible[value=' + ids[i] + ']', context).attr('checked', 'checked');
             }
         }
+        // Init datepickers
+        $('.cg-datepicker', context).each(function() {
+            var df = $(this).attr('data-cg-date-format');
+            // Convert php formats
+            df = df.replace(/Y/, 'yy')
+                .replace(/n/, 'm')
+                .replace(/m/, 'mm')
+                .replace(/j/, 'd')
+                .replace(/d/, 'dd');
+            $(this).datepicker({
+                dateFormat: df,
+                monthNames: settings.monthNames,
+                monthNamesShort: settings.monthNamesShort,
+                dayNames: settings.dayNames,
+                dayNamesShort: settings.dayNamesShort,
+                dayNamesMin: settings.dayNamesMin
+            });
+        });
+        $('.cg-datetimepicker', context).each(function() {
+            var df = $(this).attr('data-cg-date-format');
+            var tf = $(this).attr('data-cg-time-format');
+            var ap = tf.match(/[ghaA]/);
+            var ss = tf.match(/s/);
+            // Convert php formats
+            df = df.replace(/Y/, 'yy')
+                .replace(/n/, 'm')
+                .replace(/m/, 'mm')
+                .replace(/M/, 'M')
+                .replace(/F/, 'MM')
+                .replace(/j/, 'd')
+                .replace(/d/, 'dd');
+            tf = tf.replace(/[hH]/, 'hh')
+                .replace(/[gG]/, 'h')
+                .replace(/a/, 'tt')
+                .replace(/A/, 'TT')
+                .replace(/i/, 'mm')
+                .replace(/s/, 'ss');
+            $(this).datetimepicker({
+                dateFormat: df,
+                timeFormat: tf,
+                ampm: ap,
+                showSecond: ss,
+                monthNames: settings.monthNames,
+                monthNamesShort: settings.monthNamesShort,
+                dayNames: settings.dayNames,
+                dayNamesShort: settings.dayNamesShort,
+                dayNamesMin: settings.dayNamesMin,
+                timeOnlyTitle: settings.timeOnlyTitle,
+                timeText: settings.timeText,
+                hourText: settings.hourText,
+                minuteText: settings.minuteText,
+                secondText: settings.secondText,
+                currentText: settings.currentText,
+                closeText: settings.closeText
+            });
+        });
+        $('.cg-timepicker', context).each(function() {
+            var tf = $(this).attr('data-cg-time-format');
+            var ap = tf.match(/[ghaA]/);
+            var ss = tf.match(/s/);
+            // Convert php formats
+            tf = tf.replace(/[hH]/, 'hh')
+                .replace(/[gG]/, 'h')
+                .replace(/a/, 'tt')
+                .replace(/A/, 'TT')
+                .replace(/i/, 'mm')
+                .replace(/s/, 'ss');
+            $(this).timepicker({
+                timeFormat: tf,
+                ampm: ap,
+                showSecond: ss,
+                timeOnlyTitle: settings.timeOnlyTitle,
+                timeText: settings.timeText,
+                hourText: settings.hourText,
+                minuteText: settings.minuteText,
+                secondText: settings.secondText,
+                currentText: settings.currentText,
+                closeText: settings.closeText
+            });
+        });
         // Init filter on Enter
         $('.cg-filter', context).keyup(function(e) {
             if (e.keyCode == 13) {
@@ -362,12 +455,13 @@ function Carbogrid(id, opt) {
                 // Prevent multiple submit
                 if (posted) return false;
                 posted = true;
-                if ($('.cg-dialog-wrapper .ui-dialog-content input[type=file]').length) {
+                /*if ($('.cg-dialog-wrapper .ui-dialog-content input[type=file]').length) {
                     me.progress();
                 }
                 else {
                     $('.cg-dialog-loading', context).show();
-                }
+                }*/
+                $('.cg-dialog-loading', context).show();
                 return true;
             },
             success: loadResponse
@@ -403,6 +497,7 @@ function Carbogrid(id, opt) {
         }
         if (resp.table) {
             $('.cg-table', context).html(resp.table);
+            me.load();
         }
         if (resp.dialog) {
             $('.cg-dialog-wrapper .ui-dialog-content', context).html(resp.dialog);
@@ -423,7 +518,6 @@ function Carbogrid(id, opt) {
         formOptions.data = fdata;
         // Unblock ui and init table
         me.unblock();
-        me.load();
         posted = false;
         return true;
     }
