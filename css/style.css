@@ -34,8 +34,9 @@ a img {
     vertical-align: middle;
 }
 #header {
+    height: 100px;
     /*background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px, -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px, -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px, -webkit-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px, -webkit-linear-gradient(0deg, #1B1B1B 10px, transparent 10px), -webkit-linear-gradient(#1D1D1D 25%, #1A1A1A 25%, #1A1A1A 50%, transparent 50%, transparent 75%, #242424 75%, #242424);*/
-    background-color: #131313;
+    background-color: #000;
     background-size: 20px 20px;
     border-top: 3px solid #FD0;
 }
@@ -43,11 +44,42 @@ a img {
     margin: 20px 20px 0 0;
     float: right;
 }
+#slogan {
+    padding: 20px 0;
+    float: left;
+    color: #fff;
+    line-height: 60px;
+    font-size: 20px;
+    font-style: italic;
+    font-family: georgia,times new roman,serif;
+}
+#logo {
+    float: left;
+    padding: 10px;
+    margin: 10px;
+    background: #000;
+}
+#logo td {
+    padding: 1px;
+}
+#logo div {
+    width: 8px;
+    height: 8px;
+    background: #555;
+    border-radius: 1px;
+}
+#logo .c {
+    background: #fd0;
+}
+#logo .g {
+    background: #fff;
+}
 #menu
 {
     height: 35px;
-    clear: both;
-    padding: 0 20px 0 0;
+    /*clear: both;*/
+    float: right;
+    padding: 65px 20px 0 0;
     /*text-shadow: #fff 0px 1px 1px;*/
 }
 #menu ul
