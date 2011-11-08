@@ -196,15 +196,15 @@
             </tfoot>
             <tbody>
                 <?php if ($grid->allow_filter && $grid->filter_nr > 0) { // Render filters ?>
-                <tr class="cg-filters">
+                <tr class="cg-filters ui-widget-content">
                     <?php if ($grid->allow_select): ?>
-                    <td class="ui-widget-content">&nbsp;</td>
+                    <td class="ui-state-default cg-filter-cell">&nbsp;</td>
                     <?php endif ?>
                     <?php foreach ($grid->commands as $command) if ($command['grid']) { // Generate command columns ?>
-                    <td class="ui-widget-content">&nbsp;</td>
+                    <td class="ui-state-default cg-filter-cell">&nbsp;</td>
                     <?php } ?>
                     <?php $i = 2; foreach ($grid->columns as $key => $column) { if (!$column->visible) continue; ?>
-                    <td class="ui-widget-content cg-column-<?php echo $key; ?> cg-filter-cell<?php echo in_array($key, $grid->columns_visible) ? '' : ' cg-hidden'; ?>">
+                    <td class="ui-state-default cg-column-<?php echo $key; ?> cg-filter-cell<?php echo in_array($key, $grid->columns_visible) ? '' : ' cg-hidden'; ?>">
                     <?php if ($column->allow_filter) { ?>
                         <?php if (isset($column->filter_data)) { ?>
                             <?php echo form_hidden('cg_' . $grid->id . '_filter_op_' . $key, '='); ?>
@@ -336,9 +336,12 @@
                 <?php if ($grid->show_empty_rows AND $i < $grid->limit) for ($j = $i; $j < $grid->limit; $j++) { ?>
                 <tr class="<?php echo (($j % 2) ? 'even' : 'odd') . (($j == 0) ? ' first' : '') . (($j == $grid->limit - 1) ? ' last' : ''); ?>">
                     <td class="cg-empty cg-select ui-widget-content"><input type="checkbox" style="visibility:hidden;" /></td>
-                    <?php for ($k = 0; $k < $column_nr + $command_nr; $k++) { ?>
+                    <?php for ($k = 0; $k < $command_nr; $k++) { ?>
                     <td class="cg-empty ui-widget-content">&nbsp;</td>
                     <?php } ?>
+                    <?php foreach ($grid->columns as $key => $column): if (!$column->visible) continue; ?>
+                    <td class="cg-empty cg-column-<?php echo $key;?> ui-widget-content<?php echo in_array($key, $grid->columns_visible) ? '' : ' cg-hidden'; ?>">
+                    <?php endforeach ?>
                 </tr>
                 <?php } ?>
 

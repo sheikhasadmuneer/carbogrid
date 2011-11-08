@@ -11,7 +11,7 @@
     display: block;
 }
 .cg-error {
-    margin: 10px 0;
+    margin: 0 0 10px 0;
     padding: 10px;
 }
 .cg-error .ui-icon {

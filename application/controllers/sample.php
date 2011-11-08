@@ -9,6 +9,11 @@ class Sample extends CI_Controller
         //$this->output->enable_profiler(TRUE);
     }
 
+    function home()
+    {
+        $this->load->view('container');
+    }
+
     //function index($limit = 10, $offset = 0, $cols = 'all', $order = 'none', $filter_string = 'all')
     function single($grid = 'none')
     {

@@ -1,6 +1,9 @@
 html, body {
     height: 100%;
 }
+* {
+    zoom: 1;
+}
 .cg-loading {
     width: 16px;
     float: left;
@@ -105,6 +108,13 @@ html, body {
     padding: 10px;
     overflow: auto;
 }
+.cg-dialog-form .ui-dialog-buttonpane {
+    margin: 0;
+    padding: 10px;
+}
+.cg-dialog-form .cg-group-header {
+    margin: 0 -10px;
+}
 .carbogrid {
     font-size: 11px;
     font-family: arial, helvetica, verdana;
@@ -117,11 +127,13 @@ html, body {
 }*/
 .cg-filter-cell {
     white-space: nowrap;
+    border: inherit!important;
 }
 .cg-filter-cell input, .cg-filter-cell select {
     /*width: 100%;*/
     margin: 0;
     background: #fff;
+    color: #000;
 }
 .cg-rel {
     position: relative;

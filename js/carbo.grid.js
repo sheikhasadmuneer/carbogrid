@@ -149,7 +149,6 @@ function Carbogrid(id, opt) {
         $('.cg-toolbar .cg-button', context).each(function() {
             var icon = $(this).attr('class').match(/cg-icon-[^\s]*/i);
             if (icon) icon = icon[0].replace(/cg-icon-/i, 'ui-icon-');
-            //$('<button value="' + $(this).val() + '" name="' + $(this).attr('name') + '" type="submit" class="' + $(this).attr('class') + '">' + $(this).val() + '</button>').button({ icons: { primary: icon } }).insertAfter($(this));
             $('<a href="#" class="' + $(this).attr('class') + '">' + $(this).val() + '</a>')
                 .data('name', $(this).attr('name'))
                 .data('value', $(this).val())
@@ -199,13 +198,10 @@ function Carbogrid(id, opt) {
         // Init columns show/hide
         if (settings.allowColumns) {
             $('.cg-col-visible', context).live('click', function() {
-                //  var i = $('.cg-column-' + $(this).val(), context).index() + 1;
                 if (this.checked) {
-                    //$('.cg-table thead tr th:nth-child(' + i + '), .cg-table tbody tr td:nth-child(' + i + ')', context).removeClass('cg-hidden');
                     $('.cg-column-' + $(this).val(), context).removeClass('cg-hidden');
                 }
                 else {
-                    //$('.cg-table thead tr th:nth-child(' + i + '), .cg-table tbody tr td:nth-child(' + i + ')', context).addClass('cg-hidden');
                     $('.cg-column-' + $(this).val(), context).addClass('cg-hidden');
                 }
                 var columnString = '';
@@ -231,20 +227,20 @@ function Carbogrid(id, opt) {
                 $(this).closest('tr').find('td').toggleClass('ui-state-highlight').toggleClass('ui-widget-content');
                 if ($(e.target).attr('type') !== 'checkbox') {
                     var checkbox = $(this).closest('tr').find('td.cg-select :checkbox');
-                    checkbox.attr('checked', !checkbox.attr('checked'));
+                    checkbox.prop('checked', !checkbox.prop('checked'));
                 }
                 if ($('td :checkbox', context).length == $('td :checkbox:checked', context).length) {
-                    $('th.cg-select :checkbox', context).attr('checked', 'checked');
+                    $('th.cg-select :checkbox', context).prop('checked', true);
                 }
                 else {
-                    $('th.cg-select :checkbox', context).attr('checked', '');
+                    $('th.cg-select :checkbox', context).prop('checked', false);
                 }
                 me.checkButtons();
             });
             // Init select all checkbox
             $('.cg-grid th.cg-select :checkbox', context).live('click', function() {
-                $(this).closest('table').find('td :checkbox').attr('checked', $(this).attr('checked'));
-                if ($(this).attr('checked')) {
+                $(this).closest('table').find('td :checkbox').prop('checked', this.checked);
+                if (this.checked) {
                     $(this).closest('table').find('tbody td.cg-data').addClass('ui-state-highlight').removeClass('ui-widget-content');
                 }
                 else {
@@ -344,16 +340,16 @@ function Carbogrid(id, opt) {
         $('.cg-dialog-progress', context).hide().progressbar();
         // Set column visibility checkboxes
         if (settings.columnString == 'all') {
-            $('.cg-col-visible', context).attr('checked', 'checked');
+            $('.cg-col-visible', context).prop('checked', true);
         }
         else if (settings.columnString == 'none') {
-            $('.cg-col-visible', context).attr('checked', '');
+            $('.cg-col-visible', context).prop('checked', false);
         }
         else {
-            $('.cg-col-visible', context).attr('checked', '');
+            $('.cg-col-visible', context).prop('checked', false);
             var ids = settings.columnString.split(':');
             for (var i = 0; i < ids.length; i++) {
-                $('.cg-col-visible[value=' + ids[i] + ']', context).attr('checked', 'checked');
+                $('.cg-col-visible[value=' + ids[i] + ']', context).prop('checked', true);
             }
         }
         // Init datepickers
@@ -466,7 +462,12 @@ function Carbogrid(id, opt) {
             },
             success: loadResponse
         };
-        form = $('.cg-table', context).closest('form').removeAttr('enctype');
+        form = $('.cg-table', context).closest('form');
+        try {
+            form.removeAttr('encoding');
+            form.removeAttr('enctype');
+        }
+        catch (e) {}
         //$('.cg-table', context).closest('form');
         //$('.cg-table', context).closest('form').ajaxForm(formOptions);
     }
