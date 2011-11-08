@@ -1,6 +1,3 @@
-div {
-    zoom: 1;
-}
 .cg-overlay {
     position: absolute;
     top: 0;
@@ -11,4 +8,13 @@ div {
 }
 .cg-dialog {
     position: absolute;
+}
+.cg-dialog-form .cg-group-header {
+    margin: 0;
+}
+.cg-dialog-form textarea, .cg-form input.cg-long {
+    width: 593px!important;
+}
+.cg-dialog-form .cg-field-cont {
+    padding: 0!important;
 }

@@ -23,21 +23,18 @@
 }
 .cg-error ul li {
     margin: 3px 0;
-    /*list-style: disc;*/
     list-style: none;
-    /*font-size: 1.1em;*/
 }
 .cg-form-dialog {
-    /*font-size: 10px;*/
 }
 .cg-form {
-    /*font-size: 1.1em;*/
 }
 .cg-form .cg-group {
     margin: 0 0 10px 0;
 }
 .cg-form .cg-group-header {
     padding: 0.5em;
+    zoom: 1;
 }
 .cg-form .cg-group-header .ui-icon {
     cursor: pointer;
@@ -62,7 +59,9 @@
     padding: 5px;
 }
 .cg-form input, .cg-form select, .cg-form textarea {
-    background-color: #fff;
+    /*background-color: #fff;*/
+    background: #fff;
+    color: #000;
 }
 .cg-form input.cg-button {
     margin: 0;
@@ -73,10 +72,6 @@
     width: 100%;
     margin: 0;
     display: block;
-    /*width: 180px;
-    padding-right: 5px;
-    line-height: 23px;
-    text-align: right;*/
 }
 .cg-form .cg-checkbox-field-cont label {
     width: auto;
@@ -85,7 +80,6 @@
 .cg-form textarea {
     width: 100%;
     padding: 4px;
-    /*border: 1px solid #000;*/
 }
 input.cg-checkbox {
     border: 0;
@@ -96,21 +90,17 @@ input.cg-short {
     display: block;
     width: 50px;
     padding: 4px;
-    /*border: 1px solid #000;*/
 }
 input.cg-long {
-    /*width: 400px;*/
+    width: 100%;
     margin: 0;
     display: block;
-    width: 100%;
     padding: 4px;
-    /*border: 1px solid #000;*/
 }
 select.cg-long {
     display: block;
     padding: 4px;
     width: 100%;
-    /*border: 1px solid #000;*/
 }
 .ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
 .ui-timepicker-div dl{ text-align: left; }

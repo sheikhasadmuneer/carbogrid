@@ -1,5 +1,74 @@
 <div id="header">
-    <div style="position:absolute;top:0;right:0;margin: 20px;text-align:right;">
+    <div id="logo">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="c">&nbsp;</div></td>
+                <td><div class="c">&nbsp;</div></td>
+                <td><div class="c">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td><div class="c">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td><div class="c">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td><div class="c">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="c">&nbsp;</div></td>
+                <td><div class="c">&nbsp;</div></td>
+                <td><div class="c">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="b">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+                <td><div class="g">&nbsp;</div></td>
+            </tr>
+        </table>
+    </div>
+    <div id="slogan">
+        Light as a Feather, Solid as Steel
+    </div>
+
+    <div class="cg-right">
+    <div style="height:40px;padding:20px 20px 0 0;text-align:right;">
         <select name="change_theme" id="change_theme">
             <option value="<?php echo base_url(); ?>css/carbo/jquery-ui-1.8.16.custom.css" selected="selected">Original CarboGrid Theme</option>
             <option value="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css">Smoothness</option>
@@ -11,73 +80,6 @@
             <option value="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/humanity/jquery-ui.css">Humanity</option>
         </select>
     </div>
-    <div id="logo">
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <td><div class="b"></div></td>
-                <td><div class="c"></div></td>
-                <td><div class="c"></div></td>
-                <td><div class="c"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-            </tr>
-            <tr>
-                <td><div class="c"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="g"></div></td>
-                <td><div class="g"></div></td>
-                <td><div class="g"></div></td>
-            </tr>
-            <tr>
-                <td><div class="c"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="g"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-            </tr>
-            <tr>
-                <td><div class="c"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="g"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="g"></div></td>
-                <td><div class="g"></div></td>
-            </tr>
-            <tr>
-                <td><div class="b"></div></td>
-                <td><div class="c"></div></td>
-                <td><div class="c"></div></td>
-                <td><div class="c"></div></td>
-                <td><div class="g"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="g"></div></td>
-            </tr>
-            <tr>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="b"></div></td>
-                <td><div class="g"></div></td>
-                <td><div class="g"></div></td>
-                <td><div class="g"></div></td>
-            </tr>
-        </table>
-    </div>
-    <div id="slogan">
-        Light as a Feather, Solid as Steel
-    </div>
     <div id="menu">
         <ul>
             <li><?php echo anchor('sample/home', 'Home', preg_match('/(^\/sample\/home)|(^$)/i', $this->uri->uri_string()) ? 'class="active"' : ''); ?></li>
@@ -85,6 +87,7 @@
             <li><?php echo anchor('sample/multiple', 'Multiple grids', preg_match('/(^\/sample\/multiple)/i', $this->uri->uri_string()) ? 'class="active"' : ''); ?></li>
         </ul>
         <div class="cg-clear"></div>
+    </div>
     </div>
     <div class="cg-clear"></div>
 

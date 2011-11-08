@@ -23,6 +23,7 @@
                     <?php if (isset($dialog->command)) echo form_hidden('cg_' . $grid->id . '_command_' . $dialog->command, $dialog->command_arg); ?>
                 </div>
             </div>
+            <div class="cg-clear"></div>
         </div>
     </div>
 

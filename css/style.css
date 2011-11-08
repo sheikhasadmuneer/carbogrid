@@ -61,12 +61,16 @@ a img {
 }
 #logo td {
     padding: 1px;
+    width: 8px;
+    height: 8px;
+    line-height: 8px;
 }
 #logo div {
     width: 8px;
     height: 8px;
     background: #555;
     border-radius: 1px;
+    font-size: 1px/1px sans-serif;
 }
 #logo .c {
     background: #fd0;
@@ -78,8 +82,8 @@ a img {
 {
     height: 35px;
     /*clear: both;*/
-    float: right;
-    padding: 65px 20px 0 0;
+    /*float: right;*/
+    padding: 5px 20px 0 0;
     /*text-shadow: #fff 0px 1px 1px;*/
 }
 #menu ul

@@ -1,7 +1,7 @@
 html, body {
     height: 100%;
 }
-* {
+div {
     zoom: 1;
 }
 .cg-loading {
@@ -111,6 +111,9 @@ html, body {
 .cg-dialog-form .ui-dialog-buttonpane {
     margin: 0;
     padding: 10px;
+}
+.cg-dialog-form .ui-dialog-buttonset {
+    text-align: right;
 }
 .cg-dialog-form .cg-group-header {
     margin: 0 -10px;
