@@ -275,7 +275,7 @@ class Carbo_model extends CI_Model
                 {
                     // Boolean
                     case 'boolean':
-                        $table_data[$field->db_name] = ($value !== FALSE) ? 1 : 0;
+                        $table_data[$field->db_name] = $value ? 1 : 0;
                         break;
 
                     // Date

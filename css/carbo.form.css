@@ -58,8 +58,7 @@
 .cg-form .cg-files td {
     padding: 5px;
 }
-.cg-form input, .cg-form select, .cg-form textarea {
-    /*background-color: #fff;*/
+.cg-form input.cg-long, .cg-form input.cg-short, .cg-form select, .cg-form textarea {
     background: #fff;
     color: #000;
 }

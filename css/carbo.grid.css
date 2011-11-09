@@ -89,6 +89,9 @@ div {
     margin-top: -100px;
     margin-left: -150px;
 }
+.cg-dialog-confirm .cg-error {
+    margin: 0;
+}
 .cg-dialog-loading {
     width: 16px;
     height: 16px;
@@ -103,20 +106,22 @@ div {
     margin: 0.4em 0;
     float: left;
 }
-.cg-dialog-form .ui-dialog-content {
-    height: 400px;
+.cg-dialog-wrapper .ui-dialog-content {
     padding: 10px;
-    overflow: auto;
 }
-.cg-dialog-form .ui-dialog-buttonpane {
+.cg-dialog-wrapper .ui-dialog-buttonpane {
     margin: 0;
     padding: 10px;
 }
-.cg-dialog-form .ui-dialog-buttonset {
+.cg-dialog-wrapper .ui-dialog-buttonset {
     text-align: right;
 }
 .cg-dialog-form .cg-group-header {
     margin: 0 -10px;
+}
+.cg-dialog-form .ui-dialog-content {
+    height: 400px;
+    overflow: auto;
 }
 .carbogrid {
     font-size: 11px;

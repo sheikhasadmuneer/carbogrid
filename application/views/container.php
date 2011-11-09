@@ -21,7 +21,6 @@
 
     <link href="<?php echo base_url(); ?>favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-    <?php /*<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/base/jquery-ui.css" type="text/css" media="all" /> */ ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>css/carbo/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
 
     <link href="<?php echo base_url(); ?>css/carbo.grid.css" rel="stylesheet" type="text/css" media="all" />
@@ -44,7 +43,7 @@
 
 </div><!-- /#wrapper -->
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-1.7.min.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
 
 <script src="<?php echo base_url(); ?>js/jquery.bbq.js" type="text/javascript"></script>
