@@ -11,7 +11,8 @@ class Sample extends CI_Controller
 
     function home()
     {
-        $this->load->view('container');
+        $data->page = 'home';
+        $this->load->view('container', $data);
     }
 
     //function index($limit = 10, $offset = 0, $cols = 'all', $order = 'none', $filter_string = 'all')
@@ -142,6 +143,7 @@ class Sample extends CI_Controller
 
             if (count($ids))
             {
+                // This should be in a model of course
                 $this->db->set('active', 1)->where_in('id', $ids)->update('user');
             }
         }
@@ -151,6 +153,7 @@ class Sample extends CI_Controller
 
             if (count($ids))
             {
+                // This should be in a model of course
                 $this->db->set('active', 0)->where_in('id', $ids)->update('user');
             }
         }
@@ -357,5 +360,5 @@ class Sample extends CI_Controller
 
 }
 
-/* End of file judges.php */
-/* Location: ./application/controllers/admin/judges.php */
+/* End of file sample.php */
+/* Location: ./application/controllers/admin/sample.php */

@@ -82,6 +82,7 @@ div {
     display: block;
     z-index: 1002;
     position: fixed;
+    box-shadow: 0 0 100px #000;
 }
 .cg-dialog-confirm {
     width: 300px;

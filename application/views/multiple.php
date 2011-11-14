@@ -1,6 +1,7 @@
-<h2>Two grids with one form</h2>
+<h2>Grid interaction</h2>
 
 <?php echo form_open(); ?>
+
 <table width="100%">
     <tr>
         <td style="vertical-align:top;"><?php echo $grid1; ?></td>

@@ -1,8 +1,12 @@
+html {
+    height: 100%;
+}
 body {
     padding: 0;
     margin: 0;
     font-family: Arial, Verdana, Sans-Serif;
     font-size: 12px;
+    height: 100%;
 }
 form {
     padding: 0;
@@ -160,5 +164,23 @@ a img {
      );
 }
 #content {
-    padding: 5px;
+    padding: 5px 5px 100px 5px;
+}
+#wrapper {
+    min-height: 100%;
+    height: 100%;
+    height: auto !important;
+    position: relative;
+}
+#footer {
+    height: 30px;
+    padding: 10px 0;
+    width: 100%;
+    background: #000;
+    border-top: 3px solid #FD0;
+    position: absolute;
+    bottom: 0;
+}
+#footer a {
+    margin: 0 10px;
 }
