@@ -15,7 +15,7 @@ Configuration steps:
 		$db['default']['password'] = "your_db_password";
 		$db['default']['database'] = "your_db_name";
 
-4. To test file upload, make sure that files and files/temp folders are writeable
+4. To test file upload create files and files/temp folders and make sure that they are writeable
 
 5. Get rid of index.php from URL (apache mod_rewrite required)
 	- if application is not in your server root, edit last line in htaccess.txt: RewriteRule ^(.*)$ /path/to/app/index.php/$1 [L]
