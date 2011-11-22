@@ -1,7 +1,9 @@
+var Carbo = Carbo || {};
+
 if (cgSettings == undefined) var cgSettings = {};
 if (cgInstances == undefined) var cgInstances = {};
 
-function Carbogrid(id, opt) {
+Carbo.Grid = function(id, opt) {
     // If element does not exist, return
     if (!$('#' + id).length) return false;
 
@@ -24,7 +26,6 @@ function Carbogrid(id, opt) {
     var defaults = {
         baseUrl: '',
         gridUrl: '',
-        params: '',
         paramsBefore: '',
         paramsAfter: '',
         pageSize: 10,
@@ -79,6 +80,20 @@ function Carbogrid(id, opt) {
             settings.orderString + '-' +
             settings.filterString;
         return ret;
+    }
+
+    this.pushState = function(uri) {
+        if (settings.ajaxHistory) {
+            $.bbq.pushState(shortID + '=' + uri);
+            /*var url = settings.url + settings.paramsBefore + uri + settings.paramsAfter;
+            data = {};
+            data[shortID] = uri;
+            history.pushState(data, 'Carbo', url);
+            me.get(uri);*/
+        }
+        else {
+            me.get(uri);
+        }
     }
 
     this.checkButtons = function() {
@@ -168,20 +183,14 @@ function Carbogrid(id, opt) {
         });
         // Init pagination links
         $('a.cg-pag', context).live('click', function() {
-            settings.page = $.param.fragment($(this).attr('href'));
-            if (settings.ajaxHistory)
-                $.bbq.pushState(shortID + '=' + me.createUri());
-            else
-                me.get(me.createUri());
+            settings.page = $(this).attr('data-page');
+            me.pushState(me.createUri());
             return false;
         });
         // Init sort links
         $('a.cg-sort', context).live('click', function() {
-            settings.orderString = $.param.fragment($(this).attr('href'));
-            if (settings.ajaxHistory)
-                $.bbq.pushState(shortID + '=' + me.createUri());
-            else
-                me.get(me.createUri());
+            settings.orderString = $(this).attr('data-order');
+            me.pushState(me.createUri());
             return false;
         });
         // Init dialog
@@ -217,7 +226,7 @@ function Carbogrid(id, opt) {
                 settings.columnString = (nr == l) ? 'all' : (columnString ? columnString.replace(/:$/, '') : 'none');
                 if (settings.ajaxHistory) {
                     me.preventLoad = true;
-                    $.bbq.pushState(shortID + '=' + me.createUri());
+                    me.pushState(me.createUri());
                 }
             });
         }
@@ -262,10 +271,7 @@ function Carbogrid(id, opt) {
                 });
                 settings.filterString = filterString ? filterString.replace(/_$/, '') : 'all';
                 settings.page = 1;
-                if (settings.ajaxHistory)
-                    $.bbq.pushState(shortID + '=' + me.createUri());
-                else
-                    me.get(me.createUri());
+                me.pushState(me.createUri());
                 return false;
             });
         }
@@ -330,10 +336,7 @@ function Carbogrid(id, opt) {
         $('.cg-pag-nr', context).each(function() { $(this).html($(this).text()).button({ disabled: $(this).hasClass('cg-disabled') }); });
         // Init page size change
         $('.cg-page-size', context).change(function() {
-            if (settings.ajaxHistory)
-                $.bbq.pushState(shortID + '=' + me.createUri({ pageSize: $(this).val() }));
-            else
-                me.get(me.createUri({ pageSize: $(this).val() }));
+            me.pushState(me.createUri({ pageSize: $(this).val() }));
         });
         // Init dialog progressbar
         clearInterval(poll);
@@ -451,12 +454,6 @@ function Carbogrid(id, opt) {
                 // Prevent multiple submit
                 if (posted) return false;
                 posted = true;
-                /*if ($('.cg-dialog-wrapper .ui-dialog-content input[type=file]').length) {
-                    me.progress();
-                }
-                else {
-                    $('.cg-dialog-loading', context).show();
-                }*/
                 $('.cg-dialog-loading', context).show();
                 return true;
             },
@@ -468,8 +465,6 @@ function Carbogrid(id, opt) {
             form.removeAttr('enctype');
         }
         catch (e) {}
-        //$('.cg-table', context).closest('form');
-        //$('.cg-table', context).closest('form').ajaxForm(formOptions);
     }
 
     this.refresh = function() {
@@ -504,7 +499,7 @@ function Carbogrid(id, opt) {
             $('.cg-dialog-wrapper .ui-dialog-content', context).html(resp.dialog);
             // Init form
             if (cfSettings[shortID]) {
-                cfInstances[shortID] = cfInstances[shortID] = new Carboform('carboform_' + shortID, cfSettings[shortID]);
+                cfInstances[shortID] = cfInstances[shortID] = new Carbo.Form('carboform_' + shortID, cfSettings[shortID]);
             }
         }
         else {
@@ -534,7 +529,8 @@ function Carbogrid(id, opt) {
     return true;
 }
 
-function carboHashChange() {
+Carbo.hashchange = function(e) {
+    //var hash = e.originalEvent.state || {};
     var hash = $.deparam.fragment();
     for (var id in cgInstances) {
         if (hash[id] === undefined) hash[id] = cgInstances[id].defHash;
@@ -548,13 +544,15 @@ function carboHashChange() {
 $(function() {
     // Init grids if any
     for (var id in cgSettings) {
-        cgInstances[id] = new Carbogrid('carbogrid_' + id, cgSettings[id]);
+        cgInstances[id] = new Carbo.Grid('carbogrid_' + id, cgSettings[id]);
     }
     // Init history plugin
-    $(window).bind('hashchange', carboHashChange);
+    $(window).bind('hashchange', Carbo.hashchange);
     if ($.param.fragment()) {
         setTimeout(function() { $(window).trigger('hashchange'); }, 100);
     }
+
+    //$(window).bind('popstate', Carbo.hashchange);
 });
 
 // ---------------------------------------------------------------------
@@ -670,5 +668,4 @@ var Base64 = {
         }
         return string;
     }
-
 }

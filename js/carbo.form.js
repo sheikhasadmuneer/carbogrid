@@ -1,7 +1,9 @@
+var Carbo = Carbo || {};
+
 if (cfSettings == undefined) var cfSettings = {};
 if (cfInstances == undefined) var cfInstances = {};
 
-function Carboform(id, opt) {
+Carbo.Form = function(id, opt) {
     // If element does not exist, return
     if (!$('#' + id).length) return false;
 
@@ -117,7 +119,7 @@ function Carboform(id, opt) {
 $(function() {
     // Init forms if any
     for (var id in cfSettings) {
-        cfInstances[id] = new Carboform('carboform_' + id, cfSettings[id]);
+        cfInstances[id] = new Carbo.Form('carboform_' + id, cfSettings[id]);
     }
 });
 

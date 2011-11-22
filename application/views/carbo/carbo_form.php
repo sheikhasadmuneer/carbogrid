@@ -4,13 +4,9 @@
 
 <?php if (validation_errors()) { ?>
 <div class="cg-error ui-state-error ui-corner-all">
-    <?php /*<span class="cg-left ui-icon ui-icon-alert"></span>
-    <span class="cg-left"> */ ?>
-        <ul>
+    <ul>
 <?php echo validation_errors(); ?>
-        </ul>
-    <?php /* </span>
-    <span class="cg-clear"></span> */ ?>
+    </ul>
 </div>
 <?php } ?>
 
@@ -118,7 +114,7 @@
             // Dropdown
             case 'dropdown':
                 echo form_label($column->name, 'cg_field_' . $key) . "\n";
-                echo form_dropdown('cg_field_' . $key, $this->Carbo_model->get_table_dropdown($column->ref_table_db_name, $column->ref_table_id_name, $column->ref_field_db_name, $column->ref_field_type, $form->language_id, $dd_filter), $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long ui-widget-content"') . "\n";
+                echo form_dropdown('cg_field_' . $key, $this->Carbo_model->get_table_dropdown($column->ref_table_db_name, $column->ref_table_id_name, $column->ref_field_db_name, $column->ref_field_type, $dd_filter), $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long ui-widget-content"') . "\n";
                 /*if (count($column->filters)) {
                     echo "
                         <script type=\"text/javascript\">

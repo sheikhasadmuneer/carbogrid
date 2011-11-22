@@ -3,7 +3,6 @@
 class Carboform
 {
     public $id = 'carboform';
-    public $language_id = 1;
 
     public $item_id = NULL;
 
@@ -67,7 +66,7 @@ class Carboform
         $item_data = NULL;
         if (!is_null($this->item_id))
         {
-            $item_data = $this->CI->Carbo_model->get_item($this->table, $this->table_id_name, $this->columns, $this->item_id, $this->language_id);
+            $item_data = $this->CI->Carbo_model->get_item($this->table, $this->table_id_name, $this->columns, $this->item_id);
         }
 
         foreach ($this->columns as $key => $column)
@@ -145,7 +144,7 @@ class Carboform
         {
             if ($this->CI->form_validation->run() !== FALSE)
             {
-                $this->CI->Carbo_model->save_item($this->table, $this->table_id_name, $this->columns, $this->language_id, $this->item_id, $item_data, $this->filters);
+                $this->CI->Carbo_model->save_item($this->table, $this->table_id_name, $this->columns, $this->item_id, $item_data, $this->filters);
                 return TRUE;
             }
         }

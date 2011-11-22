@@ -9,6 +9,7 @@
     <li>Query generation for select/insert/update/delete for relative simple scenearios (one base table + 1 level join)</li>
     <li>Populate grid with custom datasource</li>
     <li>Custom actions: define an action url, and an icon, which will appear in the actions column and will be called with the row's id as parameter</li>
+    <li>Action permissions: restrict action to certain rows only by filters</li>
     <li><b>Full Ajax state &amp; history tracking (pagination, sorting, filtering) - copy &amp; paste urls</b></li>
     <li><b>Full functionality and (almost) the same look &amp; feel without javascript</b></li>
     <li>Browser Support: IE6+, Firefox, Chrome, Opera, Safari</li>

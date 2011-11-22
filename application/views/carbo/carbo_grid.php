@@ -8,7 +8,6 @@
             "if (cgSettings == undefined) var cgSettings = {}; cgSettings['" . $grid->id . "'] = {" .
                 "baseUrl: '" . base_url() . ($this->config->item('index_page') ? ($this->config->item('index_page') . '/') : '') . "'," .
                 "gridUrl: '" . $grid->url . "'," .
-                "params: '" . ($grid->params ? ($grid->params . '/') : '') . "'," .
                 "paramsBefore: '" . $grid->params_before . "'," .
                 "paramsAfter: '" . $grid->params_after . "'," .
                 "pageSize: '" . $grid->page_size . "'," .
@@ -109,7 +108,6 @@
         <?php if ($grid->ajax && $grid->is_ajax): ?>
         <script type="text/javascript">
             cgInstances['<?php echo $grid->id; ?>'].setParams({
-                params: '<?php echo ($grid->params ? ($grid->params . '/') : ''); ?>',
                 paramsBefore: '<?php echo $grid->params_before; ?>',
                 paramsAfter: '<?php echo $grid->params_after; ?>',
                 pageSize: '<?php echo $grid->page_size; ?>',
@@ -137,17 +135,17 @@
                     <?php if ($grid->allow_sort AND $column->allow_sort) { // Orderable header ?>
                     <?php if (isset($grid->order[$key]) && $grid->order[$key] == 'ASC') { ?>
                         <span class="cg-left">
-                            <?php echo anchor($grid->create_order_url(array('order' => array($key => 'DESC'))), $column->header, 'class="cg-sort" rel="nofollow"'); ?>
+                            <?php echo $grid->create_order_url(array('order' => array($key => 'DESC')), $column->header); ?>
                         </span>
                         <span class="cg-left ui-icon ui-icon-triangle-1-n"></span>
                     <?php } elseif (isset($grid->order[$key]) && $grid->order[$key] == 'DESC') { ?>
                         <span class="cg-left">
-                            <?php echo anchor($grid->create_order_url(array('order' => array($key => NULL))), $column->header, 'class="cg-sort" rel="nofollow"'); ?>
+                            <?php echo $grid->create_order_url(array('order' => array($key => NULL)), $column->header); ?>
                         </span>
                         <span class="cg-left ui-icon ui-icon-triangle-1-s"></span>
                     <?php } else { ?>
                         <span class="cg-left">
-                            <?php echo anchor($grid->create_order_url(array('order' => array($key => 'ASC'))), $column->header, 'class="cg-sort" rel="nofollow"'); ?>
+                            <?php echo $grid->create_order_url(array('order' => array($key => 'ASC')), $column->header); ?>
                         </span>
                     <?php } ?>
                     <?php } else { // Not orderable header ?>
@@ -171,13 +169,13 @@
                                 <?php if ($grid->allow_pagination): ?>
                                 <td class="cg-pagination">
 
-                                        <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_first') . '" class="cg-pag-first cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></span>' : '<a title="' . lang('cg_page_first') . '" href="' . site_url($grid->first_link) . '" class="cg-pag-first cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></a>'; ?>
-                                        <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_prev') . '" class="cg-pag-prev cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></span>' : '<a title="' . lang('cg_page_prev') . '" href="' . site_url($grid->prev_link) . '" class="cg-pag-prev cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></a>'; ?>
+                                        <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_first') . '" class="cg-pag-first cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></span>' : '<a title="' . lang('cg_page_first') . '" href="' . site_url($grid->first_link) . '" data-page="1" class="cg-pag-first cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></a>'; ?>
+                                        <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_prev') . '" class="cg-pag-prev cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></span>' : '<a title="' . lang('cg_page_prev') . '" href="' . site_url($grid->prev_link) . '" data-page="' . ($grid->page_curr - 1) . '" class="cg-pag-prev cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></a>'; ?>
                                         <?php foreach ($grid->page_links as $page_nr => $url) { ?>
-                                            <?php echo ($page_nr == $grid->page_curr) ? '<span class="cg-pag cg-pag-nr cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></span>' : '<a href="' . site_url($url) . '" class="cg-pag cg-pag-nr ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></a>'; ?>
+                                            <?php echo ($page_nr == $grid->page_curr) ? '<span class="cg-pag cg-pag-nr cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></span>' : '<a href="' . site_url($url) . '" data-page="' . $page_nr . '" class="cg-pag cg-pag-nr ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></a>'; ?>
                                         <?php } ?>
-                                        <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_next') . '" class="cg-pag-next cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></span>' : '<a title="' . lang('cg_page_next') . '" href="' . site_url($grid->next_link) . '" class="cg-pag-next cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></a>'; ?>
-                                        <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_last') . '" class="cg-pag-last cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></span>' : '<a title="' . lang('cg_page_last') . '" href="' . site_url($grid->last_link) . '" class="cg-pag-last cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></a>'; ?>
+                                        <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_next') . '" class="cg-pag-next cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></span>' : '<a title="' . lang('cg_page_next') . '" href="' . site_url($grid->next_link) . '" data-page="' . ($grid->page_curr + 1) . '" class="cg-pag-next cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></a>'; ?>
+                                        <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_last') . '" class="cg-pag-last cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></span>' : '<a title="' . lang('cg_page_last') . '" href="' . site_url($grid->last_link) . '" data-page="' . $grid->page_max . '" class="cg-pag-last cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></a>'; ?>
 
                                         &nbsp;<?php echo lang('cg_page_size') . '&nbsp;' . form_dropdown('cg_' . $grid->id . '_page_size', $grid->limits, $grid->limit, 'class="cg-page-size"'); ?>&nbsp;
                                         <?php if ($grid->ajax) { ?><noscript><?php } ?>

@@ -27,7 +27,7 @@ class Carbo_model extends CI_Model
     /**
      * Get table dropdown
     **/
-    function get_table_dropdown($table, $id_name, $field_main, $type, $language_id = NULL, $filters = array())
+    function get_table_dropdown($table, $id_name, $field_main, $type, $filters = array())
     {
         $data = array("" => lang("cg_select"));
 
@@ -260,7 +260,7 @@ class Carbo_model extends CI_Model
     /**
      * Save item
     **/
-    function save_item($table, $id_name, $fields, $language_id, $item_id = NULL, $item_data = NULL, $filters = array())
+    function save_item($table, $id_name, $fields, $item_id = NULL, $item_data = NULL, $filters = array())
     {
         if (count($fields))
         {

@@ -4,23 +4,22 @@ class Carbogrid
 {
     /**
      * @todo
-     * Check file upload
-     *
-     * Go to page + page size textfield
+     * Check file delete
      *
      * After add/edit go to page and higlight
-     * Horizontal scrolling
-     * 
+     *
      * Multipage select
     **/
 
-    public $id = 'datagrid';
+    // -----------------------
+    // Public options
+
+    public $id = 'carbogrid';
     public $url = '';
-    public $params = '';
     public $params_before = '';
     public $params_after = '';
     public $uri_param = 'none';
-    public $uri_segment = 3;
+    //public $uri_segment = 3;
     public $nested = FALSE;
 
     // Custom function to populate the grid
@@ -36,19 +35,11 @@ class Carbogrid
     public $allow_sort = TRUE;
     public $allow_multisort = FALSE;
 
-    public $language_id = 1;
-    public $total = 0;
-    public $limit = 10;
     public $page_size = 10;
     public $page = 1;
-    public $offset = 0;
     public $pagination_links = 5;
     public $max_cell_length = 50;
     public $show_empty_rows = TRUE;
-
-    public $order_string = 'none';
-    public $filter_string = 'all';
-    public $column_string = 'all';
 
     public $hard_filters = array();
     public $filters = array();
@@ -61,14 +52,6 @@ class Carbogrid
     public $selected_ids = array();
 
     public $commands = array();
-    public $command = NULL;
-    public $command_arg = NULL;
-    public $confirm = FALSE;
-    public $confirm_command = NULL;
-    public $confirm_arg = NULL;
-    public $confirm_title = '';
-    public $confirm_text = '';
-    public $render_table = TRUE;
 
     public $show_col_list = FALSE;
 
@@ -77,26 +60,52 @@ class Carbogrid
     public $page_start = 1;
     public $page_nr = 0;
 
+    public $ajax = TRUE;
+    public $ajax_history = TRUE;
+
+    public $table = NULL;
+    public $table_id_name = 'id';
+
+    // -----------------------
+    // Private options
+
+    public $is_ajax = FALSE;
+    public $response = NULL;
+
+    public $filter_nr = 0; // Number of filters, if none, we render no filter row
+    public $headers = array();
+
+    public $total = 0;
+    public $limit = 10;
+    public $offset = 0;
+
+    // Pagination
     public $first_link;
     public $prev_link;
     public $next_link;
     public $last_link;
     public $page_links = array();
-
     public $item_start = 0;
     public $item_end = 0;
 
-    public $filter_nr = 0; // Number of filters, if none, we render no filter row
-    public $headers = array();
-    public $ajax = TRUE;
-    public $ajax_history = TRUE;
+    // String params
+    public $order_string = 'none';
+    public $filter_string = 'all';
+    public $column_string = 'all';
 
-    public $is_ajax = FALSE;
-    public $response = NULL;
+    // Current command
+    public $command = NULL;
+    public $command_arg = NULL;
 
-    public $table = NULL;
-    public $table_id_name = 'id';
+    // Confirm dialog
+    public $confirm = FALSE;
+    public $confirm_command = NULL;
+    public $confirm_arg = NULL;
+    public $confirm_title = '';
+    public $confirm_text = '';
 
+    // Render table
+    public $render_table = TRUE;
 
     // Default column settings
     private $column_defaults = array(
@@ -674,21 +683,6 @@ class Carbogrid
         {
             $this->order = array();
         }
-
-        // ---------------------------------------------------------------------
-
-        // Get data
-        if ($this->render_table)
-        {
-            if (method_exists($this->CI, $this->get_data))
-            {
-                $this->CI->{$this->get_data}($this);
-            }
-            else
-            {
-                $this->get_data();
-            }
-        }
     }
 
     /**
@@ -717,6 +711,19 @@ class Carbogrid
     **/
     function render()
     {
+        // Get data
+        if ($this->render_table)
+        {
+            if (method_exists($this->CI, $this->get_data))
+            {
+                $this->CI->{$this->get_data}($this);
+            }
+            else
+            {
+                $this->get_data();
+            }
+        }
+
         // Calculate page numbers and pagination links
         if ($this->allow_pagination && $this->render_table)
         {
@@ -732,18 +739,18 @@ class Carbogrid
             $this->item_end = ($this->offset + $limit > $this->total) ? $this->total : $this->offset + $limit;
 
             $grid_param = $this->page_size . '-1-' . $this->column_string . '-' . $this->order_string . '-' . $this->filter_string;
-            $this->first_link = $this->url . $this->params_before . $grid_param . $this->params_after . '#1';// . $grid_param;
+            $this->first_link = $this->url . $this->params_before . $grid_param . $this->params_after;
             $grid_param = $this->page_size . '-' . ($this->page_curr - 1) . '-' . $this->column_string . '-' . $this->order_string . '-' . $this->filter_string;
-            $this->prev_link = $this->url . $this->params_before . $grid_param . $this->params_after . '#' . ($this->page_curr - 1);//. $grid_param;
+            $this->prev_link = $this->url . $this->params_before . $grid_param . $this->params_after;
             $grid_param = $this->page_size . '-' . ($this->page_curr + 1) . '-' . $this->column_string . '-' . $this->order_string . '-' . $this->filter_string;
-            $this->next_link = $this->url . $this->params_before . $grid_param . $this->params_after . '#' . ($this->page_curr + 1);//. $grid_param;
+            $this->next_link = $this->url . $this->params_before . $grid_param . $this->params_after;
             $grid_param = $this->page_size . '-' . ($this->page_max) . '-' . $this->column_string . '-' . $this->order_string . '-' . $this->filter_string;
-            $this->last_link = $this->url . $this->params_before . $grid_param . $this->params_after . '#'  . ($this->page_max);// . $grid_param;
+            $this->last_link = $this->url . $this->params_before . $grid_param . $this->params_after;
 
             for ($i = $this->page_start; $i < $this->page_nr; $i++)
             {
                 $grid_param = $this->page_size . '-' . ($i) . '-' . $this->column_string . '-' . $this->order_string . '-' . $this->filter_string;
-                $this->page_links[$i] = ($i == $this->page_curr) ? '' : ($this->url . $this->params_before . $grid_param . $this->params_after . '#' . $i);
+                $this->page_links[$i] = ($i == $this->page_curr) ? '' : ($this->url . $this->params_before . $grid_param . $this->params_after);
             }
         }
 
@@ -797,7 +804,6 @@ class Carbogrid
             'table' => $this->table,
             'table_id_name' => $this->table_id_name,
             'item_id' => $item_id,
-            'language_id' => $this->language_id,
             'is_ajax' => $this->is_ajax,
             'columns' => $this->columns,
             'filters' => $this->convert_filters($filters),
@@ -846,7 +852,7 @@ class Carbogrid
     /**
      * Create order url
     **/
-    function create_order_url($params)
+    function create_order_url($params, $text)
     {
         //$order = array_merge($this->order, $params['order']);
         if ($this->allow_multisort)
@@ -871,10 +877,10 @@ class Carbogrid
         }
         $order_str = ltrim($order_str, '_');
         $order_str = $order_str ? $order_str : 'none';
-        //return $this->url . ($this->params ? ($this->params . '/') : '') . (is_null($this->limit) ? 'all' : $this->limit) . '/' . $this->offset . '/' . $this->column_string . '/' . $order_str . '/' . $this->filter_string . '#' . ($this->params ? ($this->params . '/') : '') . (is_null($this->limit) ? 'all' : $this->limit) . '/' . $this->offset . '/' . $this->column_string . '/' . $order_str . '/' . $this->filter_string;
 
         $grid_param = $this->page_size . '-' . $this->page . '-' . $this->column_string . '-' . $order_str . '-' . $this->filter_string;
-        return $this->url . $this->params_before . $grid_param . $this->params_after . '#' . $order_str;
+
+        return anchor($this->url . $this->params_before . $grid_param . $this->params_after, $text, 'data-order="' . $order_str . '" class="cg-sort" rel="nofollow"');
     }
 
     /**
