@@ -245,13 +245,13 @@
                 </tr>
                 <?php } ?>
 
-                <?php $i = 0; foreach ($grid->data as $data_row) { $i++; $data_id = $data_row->{$grid->table_id_name}; ?>
+                <?php $i = 0; foreach ($grid->data as $data_row) { $i++; $data_id = $data_row->{$grid->table_id_name}; $selected = in_array($data_id, $grid->selected_ids); ?>
                 <tr class="ui-widget-content <?php echo (($i % 2) ? 'cg-even' : 'cg-odd') . (($i == 1) ? ' cg-first' : '') . (($i == $grid->limit) ? ' cg-last' : ''); ?>">
                     <?php if ($grid->allow_select): ?>
-                    <td class="cg-data cg-select ui-widget-content"><?php echo form_checkbox('cg_' . $grid->id . '_item_ids[]', $data_id, in_array($data_id, $grid->selected_ids), 'id="cg_' . $grid->id . '_item_' . $data_id . '" class="cg-cb-select"'); ?></td>
+                    <td class="cg-data cg-select <?php echo $selected ? 'ui-state-highlight' : 'ui-widget-content' ?>"><?php echo form_checkbox('cg_' . $grid->id . '_item_ids[]', $data_id, $selected, 'id="cg_' . $grid->id . '_item_' . $data_id . '" class="cg-cb-select"'); ?></td>
                     <?php endif ?>
                     <?php foreach ($grid->commands as $command) if ($command['grid']) { // Generate command columns ?>
-                        <td class="cg-data cg-command ui-widget-content">
+                        <td class="cg-data cg-command <?php echo $selected ? 'ui-state-highlight' : 'ui-widget-content' ?>">
                         <?php
                             if ($grid->check_command($command, $data_row))
                                 switch ($command['type'])
@@ -268,7 +268,7 @@
                         </td>
                     <?php } ?>
                     <?php foreach ($grid->columns as $key => $column): if (!$column->visible) continue; ?>
-                    <td class="cg-data cg-column-<?php echo $key;?> ui-widget-content<?php echo in_array($key, $grid->columns_visible) ? '' : ' cg-hidden'; ?>">
+                    <td class="cg-data cg-column-<?php echo $key;?> <?php echo $selected ? 'ui-state-highlight' : 'ui-widget-content' ?><?php echo in_array($key, $grid->columns_visible) ? '' : ' cg-hidden'; ?>">
                         <?php
                             $data_cell = $data_row->{$column->unique_name};
                             // Custom display template

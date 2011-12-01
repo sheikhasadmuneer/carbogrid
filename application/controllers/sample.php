@@ -106,8 +106,8 @@ class Sample extends CI_Controller
         );
 
         // Allow edit/delete only for items with the current IP address
-        $commands['delete']['filters'] = array(array('field' => 7, 'value' => $this->input->ip_address()));
-        $commands['edit']['filters'] = array(array('field' => 7, 'value' => $this->input->ip_address()));
+        $commands['delete']['filters'] = array(7 => array('value' => $this->input->ip_address()));
+        $commands['edit']['filters'] = array(7 => array('value' => $this->input->ip_address()));
         // Don't show multiple delete button
         $commands['delete']['toolbar'] = FALSE;
 
@@ -204,7 +204,7 @@ class Sample extends CI_Controller
             'columns' => $columns,
             'order' => array(0 => 'desc'),
             'hard_filters' => array(
-                array('field' => 1, 'value' => FALSE)
+                1 => array('value' => FALSE)
             ),
             'allow_add' => FALSE,
             'allow_edit' => FALSE,
@@ -258,7 +258,7 @@ class Sample extends CI_Controller
             'params_after' => $grid3,
             'columns' => $columns,
             'hard_filters' => array(
-                array('field' => 2 , 'value' => TRUE)
+                2 => array('value' => TRUE)
             ),
             'allow_add' => FALSE,
             'allow_edit' => FALSE,
@@ -285,6 +285,7 @@ class Sample extends CI_Controller
                 'header' => 'Username',
                 'group' => 'User',
                 'required' => TRUE,
+                'unique' => TRUE,
                 'form_control' => 'text_long',
                 'type' => 'string'),
             1 => array(
@@ -324,8 +325,8 @@ class Sample extends CI_Controller
         );
 
         // Allow edit/delete only for items with the current IP address
-        $commands['delete']['filters'] = array(array('field' => 4, 'value' => $this->input->ip_address()));
-        $commands['edit']['filters'] = array(array('field' => 4, 'value' => $this->input->ip_address()));
+        $commands['delete']['filters'] = array(4 => array('value' => $this->input->ip_address()));
+        $commands['edit']['filters'] = array(4 => array('value' => $this->input->ip_address()));
         // Don't show multiple delete button
         $commands['delete']['toolbar'] = FALSE;
 
@@ -337,6 +338,7 @@ class Sample extends CI_Controller
             'params_before' => $grid1 . '/' . $grid2,
             'columns' => $columns,
             'commands' => $commands,
+            'filters' => array(0 => array('value' => 'la', 'operator' => 'like')),
             'ajax' => TRUE,
             'ajax_history' => FALSE
         );

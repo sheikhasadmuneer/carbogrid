@@ -298,6 +298,11 @@ Carbo.Grid = function(id, opt) {
             form.ajaxSubmit(formOptions);
             return false;
         });
+        $('.cg-dialog-wrapper .cg-icon-button', context).live('click', function() {
+            formOptions.data[$(this).attr('name')] = $(this).val();
+            form.ajaxSubmit(formOptions);
+            return false;
+        });
         // Prevent row selection for cell controls
         $('.cg-data', context).find('a,object,:input').live('click', function(e) {
             if (!$(this).hasClass('cg-cb-select')) e.stopPropagation();

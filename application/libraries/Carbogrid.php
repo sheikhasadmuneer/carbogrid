@@ -21,9 +21,8 @@ class Carbogrid
     public $uri_param = 'none';
     //public $uri_segment = 3;
     public $nested = FALSE;
-
-    // Custom function to populate the grid
-    public $get_data = '';
+    public $ajax = TRUE;
+    public $ajax_history = TRUE;
 
     public $allow_add = TRUE;
     public $allow_edit = TRUE;
@@ -38,38 +37,31 @@ class Carbogrid
     public $page_size = 10;
     public $page = 1;
     public $pagination_links = 5;
-    public $max_cell_length = 50;
-    public $show_empty_rows = TRUE;
-
-    public $hard_filters = array();
-    public $filters = array();
-    public $order = array();
     public $limits = array(5 => 5, 10 => 10, 20 => 20, 50 => 50);
+    public $show_empty_rows = TRUE;
+    public $max_cell_length = 50;
+
+    public $filters = array();
+    public $hard_filters = array();
+    public $order = array();
 
     public $columns = array();
-    public $data = array();
     public $columns_visible = array();
     public $selected_ids = array();
 
     public $commands = array();
 
-    public $show_col_list = FALSE;
-
-    public $page_max = 0;
-    public $page_curr = 1;
-    public $page_start = 1;
-    public $page_nr = 0;
-
-    public $ajax = TRUE;
-    public $ajax_history = TRUE;
-
     public $table = NULL;
     public $table_id_name = 'id';
+
+    // Custom function to populate the grid
+    public $get_data = '';
 
     // -----------------------
     // Private options
 
     public $is_ajax = FALSE;
+    public $show_col_list = FALSE;
     public $response = NULL;
 
     public $filter_nr = 0; // Number of filters, if none, we render no filter row
@@ -79,7 +71,13 @@ class Carbogrid
     public $limit = 10;
     public $offset = 0;
 
+    public $data = array();
+
     // Pagination
+    public $page_max = 0;
+    public $page_curr = 1;
+    public $page_start = 1;
+    public $page_nr = 0;
     public $first_link;
     public $prev_link;
     public $next_link;
@@ -119,7 +117,7 @@ class Carbogrid
         'allow_sort'        => TRUE,
         // Date type settings
         'date_format'       => 'm/d/Y',
-        'time_format'       => 'H:i',
+        'time_format'       => 'h:i A',
         // URL type settings
         'url_target'        => '_self',
         // File upload settings
@@ -695,9 +693,9 @@ class Carbogrid
         {
             $filters[] = $filter;
         }
-        foreach ($this->hard_filters as $filter)
+        foreach ($this->hard_filters as $key => $filter)
         {
-            $f['field'] = $this->columns[$filter['field']]->where_name;
+            $f['field'] = $this->columns[$key]->where_name;
             $f['value'] = $filter['value'];
             $f['operator'] = isset($filter['operator']) ? $filter['operator'] : 'eq';
             $filters[] = $f;
@@ -889,9 +887,9 @@ class Carbogrid
     function convert_filters($filters)
     {
         $filt = array();
-        foreach ($filters as $filter)
+        foreach ($filters as $key => $filter)
         {
-            $f['field'] = $this->columns[$filter['field']]->where_name;
+            $f['field'] = $this->columns[$key]->where_name;
             $f['value'] = $filter['value'];
             $f['operator'] = isset($filter['operator']) ? $filter['operator'] : 'eq';
             $filt[] = $f;
@@ -905,9 +903,9 @@ class Carbogrid
     function check_command($command, $row)
     {
         $valid = TRUE;
-        foreach ($command['filters'] as $filter)
+        foreach ($command['filters'] as $key => $filter)
         {
-            $field = $row->{$this->columns[$filter['field']]->unique_name};
+            $field = $row->{$this->columns[$key]->unique_name};
             $value = $filter['value'];
             if (!isset($filter['operator']))
             {
