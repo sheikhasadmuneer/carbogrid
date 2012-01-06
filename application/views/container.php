@@ -15,7 +15,6 @@
     <meta name="description" content="CarboGrid is a PHP datagrid written in the CodeIgniter Framework" />
     <meta name="abstract" content="CarboGrid is a PHP datagrid written in the CodeIgniter Framework" />
     <meta name="keywords" content="carbogrid, php, datagrid, codeigniter, jquery, rad, grid, data, rapid application development" />
-    <meta name="google-site-verification" content="bV5Ukj9vyHXNcYa0SmDGuhDrhXm4NxGNhiY9GdiM48s" />
 
     <title>Carbogrid</title>
 

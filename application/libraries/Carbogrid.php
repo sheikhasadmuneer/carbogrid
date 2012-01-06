@@ -4,7 +4,6 @@ class Carbogrid
 {
     /**
      * @todo
-     * Check file delete
      *
      * After add/edit go to page and higlight
      *

@@ -1,3 +1,8 @@
+<h3>About</h3>
+<p>
+    Carbogrid is a datagrid extension for the Codeigniter PHP framework.
+</p>
+
 <h3>Features</h3>
 <ul class="ui-widget">
     <li>Pagination</li>
@@ -41,3 +46,5 @@
     <li>The <a href="http://benalman.com/projects/jquery-bbq-plugin/" target="_blank">jQuery BBQ plugin</a> by Ben Alman</li>
     <li>The <a href="http://jquery.malsup.com/form" target="_blank">jQuery Form plugin</a></li>
 </ul>
+
+
