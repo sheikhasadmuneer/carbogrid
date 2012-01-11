@@ -26,6 +26,7 @@
     <!--[if lt IE 7]><link href="<?php echo base_url(); ?>css/carbo.grid.ie6.css" rel="stylesheet" type="text/css" media="all" /><![endif]-->
     <link href="<?php echo base_url(); ?>css/carbo.form.css" rel="stylesheet" type="text/css" media="all" />
 
+    <link href="<?php echo base_url(); ?>css/960.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>css/style.css" rel="stylesheet" type="text/css" />
 
 </head>

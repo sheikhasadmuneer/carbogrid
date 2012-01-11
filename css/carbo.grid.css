@@ -44,10 +44,11 @@ div {
 .cg-button-text-only .ui-button-text {
     padding: 0 1em;
 }
-.cg-table {
-    /*width: 100%;
-    overflow-x: auto;
-    overflow-y: visible;*/
+.cg-scroll {
+    overflow:auto;
+    /*overflow-y:hidden;
+    border-top: 0;
+    border-bottom: 0;*/
 }
 .cg-overlay {
     z-index: 1001;
@@ -184,6 +185,7 @@ div {
 .cg-grid {
     width: 100%;
     border-collapse: collapse;
+    /*table-layout: fixed;*/
 }
 .cg-grid tfoot td {
     font-weight: normal;
@@ -202,7 +204,7 @@ div {
     display: block;
 }
 .cg-grid .cg-select {
-    width: 1%;
+    width: 13px;
     padding: 5px;
     text-align: center;
     vertical-align: middle;
@@ -211,12 +213,6 @@ div {
     margin: 0;
     padding: 0;
 }
-.cg-grid th.cg-command {
-    width: 1%;
-    min-width: 36px;
-    padding: 5px;
-    text-align: center;
-}
 .cg-grid td {
     padding: 5px;
     text-align: left;
@@ -224,11 +220,12 @@ div {
     line-height: 16px;
     /*white-space: nowrap;*/
 }
-.cg-grid td.cg-command {
+.cg-grid .cg-command {
+    width: 16px;
     padding: 5px;
     text-align: center;
 }
-.cg-grid td.cg-command a.cg-icon {
+.cg-grid .cg-command a.cg-icon {
     font-size: 8px;
 }
 .cg-grid td.cg-empty {
@@ -253,15 +250,23 @@ div {
     border: inherit;
     font-weight: inherit;
 }
-.cg-grid .cg-footer {
+/*.cg-grid .cg-footer {
     padding: 0;
 }
 .cg-grid .cg-footer table {
     width: 100%;
-}
+}*/
 .cg-grid .cg-footer .cg-pag .ui-button-text {
     padding: .4em;
 }
 .cg-grid .cg-footer .cg-items-nr {
-    text-align: right;
+    /*padding: 5px 0;
+    text-align: right;*/
+    line-height: 29px;
+}
+.cg-grid .cg-footer .cg-size {
+    line-height: 29px;
+}
+.cg-grid-footer td {
+    border-top: 0;
 }

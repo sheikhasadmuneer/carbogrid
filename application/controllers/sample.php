@@ -130,6 +130,7 @@ class Sample extends CI_Controller
         }
 
         // Pass grid to the view
+        $data->page = 'single';
         $data->page_grid = $this->carbogrid->render();
 
         $this->load->view('container', $data);
