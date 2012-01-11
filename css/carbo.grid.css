@@ -46,9 +46,17 @@ div {
 }
 .cg-scroll {
     overflow:auto;
-    /*overflow-y:hidden;
     border-top: 0;
-    border-bottom: 0;*/
+    border-bottom: 0;
+}
+.cg-scroll tr {
+    border: 0;
+}
+.cg-scroll td:first-child, .cg-scroll th:first-child {
+    border-left: 0;
+}
+.cg-scroll td:last-child, .cg-scroll th:last-child {
+    border-right: 0;
 }
 .cg-overlay {
     z-index: 1001;
@@ -204,7 +212,7 @@ div {
     display: block;
 }
 .cg-grid .cg-select {
-    width: 13px;
+    width: 16px;
     padding: 5px;
     text-align: center;
     vertical-align: middle;

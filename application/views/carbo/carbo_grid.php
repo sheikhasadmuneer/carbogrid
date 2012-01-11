@@ -120,7 +120,7 @@
             });
         </script>
         <?php endif ?>
-        <div class="cg-scroll">
+        <div class="cg-scroll ui-widget-content">
             <table class="cg-grid" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr class="cg-header">
@@ -314,34 +314,33 @@
         </div>
         <table class="cg-grid cg-grid-footer" cellpadding="0" cellspacing="0">
             <tr>
-                <?php if ($grid->allow_select): ?>
+                <?php /*if ($grid->allow_select): ?>
                 <td class="cg-select ui-widget-header ui-widget-footer">&nbsp;</td>
-                <?php endif ?>
+                <?php endif*/ ?>
                 <td class="ui-widget-header ui-widget-footer cg-footer" colspan="<?php echo $column_nr + $command_nr; ?>">
+                    <?php if ($grid->allow_pagination): ?>
+                    <div class="cg-left cg-pagination">
 
-                            <?php if ($grid->allow_pagination): ?>
-                            <div class="cg-left cg-pagination">
+                            <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_first') . '" class="cg-pag-first cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></span>' : '<a title="' . lang('cg_page_first') . '" href="' . site_url($grid->first_link) . '" data-page="1" class="cg-pag-first cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></a>'; ?>
+                            <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_prev') . '" class="cg-pag-prev cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></span>' : '<a title="' . lang('cg_page_prev') . '" href="' . site_url($grid->prev_link) . '" data-page="' . ($grid->page_curr - 1) . '" class="cg-pag-prev cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></a>'; ?>
+                            <?php foreach ($grid->page_links as $page_nr => $url) { ?>
+                                <?php echo ($page_nr == $grid->page_curr) ? '<span class="cg-pag cg-pag-nr cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></span>' : '<a href="' . site_url($url) . '" data-page="' . $page_nr . '" class="cg-pag cg-pag-nr ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></a>'; ?>
+                            <?php } ?>
+                            <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_next') . '" class="cg-pag-next cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></span>' : '<a title="' . lang('cg_page_next') . '" href="' . site_url($grid->next_link) . '" data-page="' . ($grid->page_curr + 1) . '" class="cg-pag-next cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></a>'; ?>
+                            <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_last') . '" class="cg-pag-last cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></span>' : '<a title="' . lang('cg_page_last') . '" href="' . site_url($grid->last_link) . '" data-page="' . $grid->page_max . '" class="cg-pag-last cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></a>'; ?>
+                    </div>
+                    <div class="cg-left cg-size">
+                            &nbsp;<?php echo lang('cg_page_size') . '&nbsp;' . form_dropdown('cg_' . $grid->id . '_page_size', $grid->limits, $grid->limit, 'class="cg-page-size"'); ?>&nbsp;
+                            <?php if ($grid->ajax) { ?><noscript><?php } ?>
+                                <input type="submit" name="cg_<?php echo $grid->id; ?>_change_page_size" value="<?php echo lang('cg_go'); ?>" class="cg-button cg-button-text-only ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
+                            <?php if ($grid->ajax) { ?></noscript><?php } ?>
 
-                                    <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_first') . '" class="cg-pag-first cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></span>' : '<a title="' . lang('cg_page_first') . '" href="' . site_url($grid->first_link) . '" data-page="1" class="cg-pag-first cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-first"></span><span class="ui-button-text">' . lang('cg_page_first') . '</span></a>'; ?>
-                                    <?php echo ($grid->page_curr == 1) ? '<span title="' . lang('cg_page_prev') . '" class="cg-pag-prev cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></span>' : '<a title="' . lang('cg_page_prev') . '" href="' . site_url($grid->prev_link) . '" data-page="' . ($grid->page_curr - 1) . '" class="cg-pag-prev cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">' . lang('cg_page_prev') . '</span></a>'; ?>
-                                    <?php foreach ($grid->page_links as $page_nr => $url) { ?>
-                                        <?php echo ($page_nr == $grid->page_curr) ? '<span class="cg-pag cg-pag-nr cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></span>' : '<a href="' . site_url($url) . '" data-page="' . $page_nr . '" class="cg-pag cg-pag-nr ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">' . $page_nr . '</span></a>'; ?>
-                                    <?php } ?>
-                                    <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_next') . '" class="cg-pag-next cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></span>' : '<a title="' . lang('cg_page_next') . '" href="' . site_url($grid->next_link) . '" data-page="' . ($grid->page_curr + 1) . '" class="cg-pag-next cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">' . lang('cg_page_next') . '</span></a>'; ?>
-                                    <?php echo ($grid->page_curr == $grid->page_max) ? '<span title="' . lang('cg_page_last') . '" class="cg-pag-last cg-disabled ui-button ui-widget ui-state-default ui-corner-all ui-button-disabled ui-state-disabled ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></span>' : '<a title="' . lang('cg_page_last') . '" href="' . site_url($grid->last_link) . '" data-page="' . $grid->page_max . '" class="cg-pag-last cg-pag ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"><span class="ui-button-icon-primary ui-icon ui-icon-seek-end"></span><span class="ui-button-text">' . lang('cg_page_last') . '</span></a>'; ?>
-                            </div>
-                            <div class="cg-left cg-size">
-                                    &nbsp;<?php echo lang('cg_page_size') . '&nbsp;' . form_dropdown('cg_' . $grid->id . '_page_size', $grid->limits, $grid->limit, 'class="cg-page-size"'); ?>&nbsp;
-                                    <?php if ($grid->ajax) { ?><noscript><?php } ?>
-                                        <input type="submit" name="cg_<?php echo $grid->id; ?>_change_page_size" value="<?php echo lang('cg_go'); ?>" class="cg-button cg-button-text-only ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
-                                    <?php if ($grid->ajax) { ?></noscript><?php } ?>
-
-                            </div>
-                            <?php endif ?>
-                            <div class="cg-right cg-items-nr">
-                                <?php echo sprintf(lang('cg_page_displaying'), $grid->item_start, $grid->item_end, $grid->total); ?>
-                            </div>
-                            <div class="cg-clear"></div>
+                    </div>
+                    <?php endif ?>
+                    <div class="cg-right cg-items-nr">
+                        <?php echo sprintf(lang('cg_page_displaying'), $grid->item_start, $grid->item_end, $grid->total); ?>
+                    </div>
+                    <div class="cg-clear"></div>
 
                 </td>
             </tr>
