@@ -212,6 +212,7 @@ class Sample extends CI_Controller
             'allow_delete' => FALSE,
             'allow_filter' => FALSE,
             'allow_columns' => FALSE,
+            'allow_page_size' => FALSE,
             'nested' => TRUE,
             'ajax' => TRUE
         );
@@ -266,6 +267,7 @@ class Sample extends CI_Controller
             'allow_delete' => FALSE,
             'allow_filter' => FALSE,
             'allow_columns' => FALSE,
+            'allow_page_size' => FALSE,
             'nested' => TRUE,
             'ajax' => TRUE
         );

@@ -46,10 +46,10 @@ div {
 }
 .cg-scroll {
     overflow:auto;
-    border-top: 0;
-    border-bottom: 0;
+    /*border-top: 0;
+    border-bottom: 0;*/
 }
-.cg-scroll tr {
+/*.cg-scroll tr {
     border: 0;
 }
 .cg-scroll td:first-child, .cg-scroll th:first-child {
@@ -57,7 +57,7 @@ div {
 }
 .cg-scroll td:last-child, .cg-scroll th:last-child {
     border-right: 0;
-}
+}*/
 .cg-overlay {
     z-index: 1001;
     position: fixed;
@@ -277,4 +277,14 @@ div {
 }
 .cg-grid-footer td {
     border-top: 0;
+}
+.cg-pag {
+    display: block;
+    float: left;
+    margin: 0 -1px;
+    position: relative;
+    z-index: 1;
+}
+.cg-pag:hover {
+    z-index: 2;
 }

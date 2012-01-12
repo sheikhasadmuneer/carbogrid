@@ -30,6 +30,7 @@ class Carbogrid
     public $allow_columns = TRUE;
     public $allow_select = TRUE;
     public $allow_pagination = TRUE;
+    public $allow_page_size = TRUE;
     public $allow_sort = TRUE;
     public $allow_multisort = FALSE;
 
@@ -288,7 +289,7 @@ class Carbogrid
         {
             $uri_param = explode('-', $uri_param);
             if (isset($uri_param[0]))
-                $this->page_size = $uri_param[0];
+                $this->page_size = $this->allow_page_size ? $uri_param[0] : $this->page_size;
             if (isset($uri_param[1]))
                 $this->page = $uri_param[1];
             if (isset($uri_param[2]))

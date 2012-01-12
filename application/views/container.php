@@ -57,6 +57,12 @@
         $('#change_theme').change(function() {
             $('link[href*=jquery-ui]').attr('href', $(this).val());
         });
+        $('#source').hide();
+        $('#source_toggle').click(function() {
+            $('.ui-icon', this).toggleClass('ui-icon-triangle-1-e').toggleClass('ui-icon-triangle-1-s');
+            $('#source').toggle();
+            return false;
+        });
     });
 </script>
 

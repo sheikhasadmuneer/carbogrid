@@ -65,7 +65,7 @@
             </table>
         </div>
         <div id="slogan">
-            Light as a Feather, Solid as Steel
+            Light as a Feather.<br/> Solid as Steel.
         </div>
 
         <div class="cg-right">
@@ -85,9 +85,9 @@
             <div id="menu">
                 <ul>
                     <li><?php echo anchor('sample/home', 'Home', preg_match('/(^\/sample\/home)|(^$)/i', $this->uri->uri_string()) ? 'class="active"' : ''); ?></li>
-                    <li><?php echo anchor('http://code.google.com/p/carbogrid/wiki/Documentation', 'Documentation', preg_match('/(^\/sample\/docs)/i', $this->uri->uri_string()) ? 'class="active"' : ''); ?></li>
                     <li><?php echo anchor('sample/single', 'Single grid', preg_match('/(^\/sample\/single)/i', $this->uri->uri_string()) ? 'class="active"' : ''); ?></li>
                     <li><?php echo anchor('sample/multiple', 'Multiple grids', preg_match('/(^\/sample\/multiple)/i', $this->uri->uri_string()) ? 'class="active"' : ''); ?></li>
+                    <li><?php echo anchor('http://code.google.com/p/carbogrid/wiki/Documentation', 'Documentation', preg_match('/(^\/sample\/docs)/i', $this->uri->uri_string()) ? 'class="active"' : ''); ?></li>
                 </ul>
                 <div class="cg-clear"></div>
             </div>

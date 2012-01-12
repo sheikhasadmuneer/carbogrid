@@ -1,4 +1,4 @@
-<h3>About</h3>
+<h1>About</h1>
 <p>Carbogrid is a CRUD (Create-Update-Delete) extension for the Codeigniter PHP framework.</p>
 <p>You just have to write a few lines to have a complete CRUD: view your data in a feature rich datagrid, add/edit data with the automatically generated forms, which, of course, are validated based on the given settings.</p>
 <p>Carbigrid has a lot of customization options, you can enable/disable features, customize form validation, add custom actions, use complex custom database queries instead of the generated one, and much more (see <a href="http://code.google.com/p/carbogrid/wiki/Documentation">Documentation</a>).</p>
@@ -9,7 +9,7 @@
 <p>The second requirment was that the grid must work even on browsers with JavaScript disabled. So Carbogrid is built using the <a href="http://en.wikipedia.org/wiki/Progressive_enhancement" target="_blank">progressive enhancement strategy</a></p>
 
 
-<h3>Features</h3>
+<h2>Features</h2>
 <ul class="ui-widget">
     <li>Pagination</li>
     <li>Single or multicolumn sorting
@@ -26,26 +26,33 @@
     <li>Browser Support: IE6+, Firefox, Chrome, Opera, Safari</li>
 </ul>
 
-<h3>Requierments</h3>
+<h2>Requierments</h2>
 <ul class="ui-widget">
     <li>CodeIgniter >= 2.0</li>
     <li>jQuery >= 1.6</li>
     <li>jQuery UI >= 1.8</li>
 </ul>
 
-<h3>License</h3>
+<h2>Live demo</h2>
+<p>Check the examples below:</p>
+<ul>
+    <li><?php echo anchor('sample/single', 'Demo 1 (Single grid per page)'); ?></li>
+    <li><?php echo anchor('sample/multiple', 'Demo 2 (Multiple grids per page)'); ?></li>
+</ul>
+
+<h2>License</h2>
 
 <ul class="ui-widget">
     <li>Released under the <a href="http://www.opensource.org/licenses/mit-license.php" target="_blank">MIT License</a></li>
 </ul>
 
-<h3>Download, Documentation and Issue Tracking</h3>
+<h2>Download, Documentation and Issue Tracking</h2>
 
 <ul class="ui-widget">
     <li><a href="http://code.google.com/p/carbogrid/" target="_blank">Carbogrid @ Google Code</a></li>
 </ul>
 
-<h3>Thanks To</h3>
+<h2>Thanks To</h2>
 <ul class="ui-widget">
     <li>The <a href="http://codeigniter.com" target="_blank">CodeIgniter</a> team</li>
     <li>The <a href="http://jquery.com" target="_blank">jQuery</a> and <a href="http://jqueryui.com" target="_blank">jQuery UI</a> team</li>

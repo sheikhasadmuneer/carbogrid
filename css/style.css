@@ -5,9 +5,18 @@ body {
     padding: 0;
     margin: 0;
     font-family: Arial, Verdana, Sans-Serif;
-    font-size: 12px;
+    font-size: 14px;
     height: 100%;
     background: #000;
+    background-attachment: scroll, scroll, scroll, scroll, scroll, scroll;
+    background-clip: border-box, border-box, border-box, border-box, border-box, border-box;
+    background-color: #131313;
+    background-image: -moz-linear-gradient(63deg, #151515 5px, transparent 5px), -moz-linear-gradient(243deg, #151515 5px, transparent 5px), -moz-linear-gradient(63deg, #222222 5px, transparent 5px), -moz-linear-gradient(243deg, #222222 5px, transparent 5px), -moz-linear-gradient(0deg, #1B1B1B 10px, transparent 10px), -moz-linear-gradient(#1D1D1D 25%, #1A1A1A 25%, #1A1A1A 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background-image: -webkit-linear-gradient(63deg, rgb(21, 21, 21) 5px, transparent 5px), -webkit-linear-gradient(243deg, rgb(21, 21, 21) 5px, transparent 5px), -webkit-linear-gradient(63deg, rgb(34, 34, 34) 5px, transparent 5px), -webkit-linear-gradient(243deg, rgb(34, 34, 34) 5px, transparent 5px), -webkit-linear-gradient(0deg, rgb(27, 27, 27) 10px, transparent 10px), -webkit-linear-gradient(top, rgb(29, 29, 29) 25%, rgb(26, 26, 26) 25%, rgb(26, 26, 26) 50%, transparent 50%, transparent 75%, rgb(36, 36, 36) 75%, rgb(36, 36, 36));
+    background-origin: padding-box, padding-box, padding-box, padding-box, padding-box, padding-box;
+    background-position: 0 5px, 10px 0px, 0 10px, 10px 5px, 0 0%, 0 0;
+    background-repeat: repeat, repeat, repeat, repeat, repeat, repeat;
+    background-size: 20px 20px;
 }
 form {
     padding: 0;
@@ -17,17 +26,17 @@ p {
     zoom: 1.0;
 }
 h1 {
-    font-size: 1.4em;
+    font-size: 1.6em;
     font-weight: bold;
     margin: 0.67em 0px;
 }
 h2 {
-    font-size: 1.2em;
+    font-size: 1.4em;
     font-weight: bold;
     margin: 0.83em 0px;
 }
 h3 {
-    font-size: 1.1em;
+    font-size: 1.2em;
     font-weight: bold;
     margin: 1em 0px;
 }
@@ -40,9 +49,6 @@ a img {
 }
 #header {
     height: 100px;
-    /*background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px, -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px, -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px, -webkit-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px, -webkit-linear-gradient(0deg, #1B1B1B 10px, transparent 10px), -webkit-linear-gradient(#1D1D1D 25%, #1A1A1A 25%, #1A1A1A 50%, transparent 50%, transparent 75%, #242424 75%, #242424);*/
-    background-color: #000;
-    background-size: 20px 20px;
     border-top: 3px solid #FD0;
 }
 #userlinks {
@@ -53,8 +59,8 @@ a img {
     padding: 20px 0;
     float: left;
     color: #fff;
-    line-height: 60px;
-    font-size: 20px;
+    line-height: 30px;
+    font-size: 18px;
     /*font-style: italic;
     font-family: georgia,times new roman,serif;*/
     font-family: courier, monospace;
@@ -122,7 +128,7 @@ a img {
     border-bottom: 0;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 0.9em;
+    font-size: 12px;
     color: #000;
     border-radius: 7px 7px 0 0;
     box-shadow: -0px 0px 3px #888;
@@ -148,29 +154,12 @@ a img {
     position: relative;
     z-index: 3;
 }
-/*#menu-bottom {
-
-    width: 100%;
-    height: 4px;
-    margin-top: -4px;
-    z-index: 2;
-    position: absolute;
-    background-image: -webkit-gradient(
-     linear, left bottom, left top,
-     color-stop(0, rgba(219, 219, 219, 100)),
-     color-stop(1, rgba(233, 233, 233, 0))
-     );
-    background-image: -moz-linear-gradient(
-     center bottom,
-     rgba(219, 219, 219, 100) 0%,
-     rgba(233, 233, 233, 0) 100%
-     );
-}*/
 #content {
-    padding: 5px 5px 15px 5px;
+    /*padding: 5px 5px 15px 5px;*/
+    padding-bottom: 15px;
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 300px #aaa;
+    box-shadow: 0 0 300px #000;
 }
 #wrapper {
     min-height: 100%;
@@ -179,11 +168,15 @@ a img {
     position: relative;
 }
 #footer {
-    width: 100%;
+    /*width: 100%;*/
     height: 30px;
-    margin: 20px 0;
-    padding: 10px 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    /*padding: 10px 0;*/
     background: #000;
+    border-radius: 10px;
     /*border-top: 3px solid #FD0;
     position: absolute;
     bottom: 0;*/
@@ -191,3 +184,58 @@ a img {
 #footer a {
     margin: 0 10px;
 }
+#source_toggle {
+    margin: 1em 0;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 21px;
+}
+#source_toggle span {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+}
+
+.php ol {margin:0;padding:20px 0 20px 60px;}
+.php .de1, .php .de2 {color: #000060; font-weight: normal;}
+.php  {overflow: auto; white-space: nowrap;border: 1px dotted #a0a0a0; font-family: 'Courier New', Courier, monospace; font-size: 110%; margin: 0; line-height: 110%; padding: 0;color: #0000bb;}
+.php a:link {color: #006;}
+.php a:hover {background-color: #d6d6e6;}
+.php .imp {font-weight: bold; color: red;}
+.php li, .php .li1 {font-family: 'Courier New', Courier, monospace; color: #000060; padding-bottom: 2px;}
+.php .ln {width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;}
+.php .li2 {font-weight: bold; color: #000090; line-height: 90%}
+.php .kw1 {color: #b1b100;}
+.php .kw2 {color: #000000; font-weight: bold;}
+.php .kw3 {color: #990000;}
+.php .kw4 {color: #009900; font-weight: bold;}
+.php .co1 {color: #666666; font-style: italic;font-style: normal;}
+.php .co2 {color: #666666; font-style: italic;}
+.php .co3 {color: #0000cc; font-style: italic;}
+.php .co4 {color: #009933; font-style: italic;}
+.php .coMULTI {color: #666666; font-style: italic;font-style: normal;}
+.php .es0 {color: #000099; font-weight: bold;font-weight: normal;}
+.php .es1 {color: #000099; font-weight: bold;}
+.php .es2 {color: #660099; font-weight: bold;}
+.php .es3 {color: #660099; font-weight: bold;}
+.php .es4 {color: #006699; font-weight: bold;}
+.php .es5 {color: #006699; font-weight: bold; font-style: italic;}
+.php .es6 {color: #009933; font-weight: bold;}
+.php .es_h {color: #000099; font-weight: bold;}
+.php .br0 {color: #009900;}
+.php .sy0 {color: #339933;}
+.php .sy1 {color: #000000; font-weight: bold;}
+.php .st0 {color: #0000ff;}
+.php .st_h {color: #0000ff;}
+.php .nu0 {color: #cc66cc;}
+.php .nu8 {color: #208080;}
+.php .nu12 {color: #208080;}
+.php .nu19 {color:#800080;}
+.php .me1 {color: #004000;}
+.php .me2 {color: #004000;}
+.php .me {1}
+.php .re0 {color: #000088;}
+.php span.xtra { display:block; }

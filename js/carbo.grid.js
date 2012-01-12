@@ -334,11 +334,11 @@ Carbo.Grid = function(id, opt) {
             }
         );
         // Init pagination buttons
-        $('.cg-pag-first', context).html($('.cg-pag-first', context).text()).button({ icons: { primary: 'ui-icon-seek-first' }, text: false, disabled: $('.cg-pag-first', context).hasClass('cg-disabled') });
-        $('.cg-pag-prev', context).html($('.cg-pag-prev', context).text()).button({ icons: { primary: 'ui-icon-seek-prev' }, text: false, disabled: $('.cg-pag-prev', context).hasClass('cg-disabled') });
-        $('.cg-pag-next', context).html($('.cg-pag-next', context).text()).button({ icons: { primary: 'ui-icon-seek-next' }, text: false, disabled: $('.cg-pag-next', context).hasClass('cg-disabled') });
-        $('.cg-pag-last', context).html($('.cg-pag-last', context).text()).button({ icons: { primary: 'ui-icon-seek-end' }, text: false, disabled: $('.cg-pag-last', context).hasClass('cg-disabled') });
-        $('.cg-pag-nr', context).each(function() { $(this).html($(this).text()).button({ disabled: $(this).hasClass('cg-disabled') }); });
+        $('.cg-pag-first', context).html($('.cg-pag-first', context).text()).button({ icons: { primary: 'ui-icon-seek-first' }, text: false, disabled: $('.cg-pag-first', context).hasClass('cg-disabled') }).removeClass('ui-corner-all').addClass('ui-corner-left');
+        $('.cg-pag-prev', context).html($('.cg-pag-prev', context).text()).button({ icons: { primary: 'ui-icon-seek-prev' }, text: false, disabled: $('.cg-pag-prev', context).hasClass('cg-disabled') }).removeClass('ui-corner-all');
+        $('.cg-pag-next', context).html($('.cg-pag-next', context).text()).button({ icons: { primary: 'ui-icon-seek-next' }, text: false, disabled: $('.cg-pag-next', context).hasClass('cg-disabled') }).removeClass('ui-corner-all');
+        $('.cg-pag-last', context).html($('.cg-pag-last', context).text()).button({ icons: { primary: 'ui-icon-seek-end' }, text: false, disabled: $('.cg-pag-last', context).hasClass('cg-disabled') }).removeClass('ui-corner-all').addClass('ui-corner-right');
+        $('.cg-pag-nr', context).each(function() { $(this).html($(this).text()).button({ disabled: $(this).hasClass('cg-disabled') }); }).removeClass('ui-corner-all');;
         // Init page size change
         $('.cg-page-size', context).change(function() {
             me.pushState(me.createUri({ pageSize: $(this).val() }));
