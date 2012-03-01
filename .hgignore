@@ -1,2 +1,3 @@
-
+glob:config.php
+glob:system/*
 

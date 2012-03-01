@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "/projects/carbo/src/carbogrid";
+$config['base_url']	= "/";
 
 /*
 |--------------------------------------------------------------------------
