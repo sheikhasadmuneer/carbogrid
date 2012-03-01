@@ -44,6 +44,7 @@
         // Display column filters
         $i = 0;
         $dd_filter = array();
+        $label = form_label($column->name . ($column->required ? '<span class="cg-req">*</span>' : ''), 'cg_field_' . $key) . "\n";
         /*foreach ($column->filters as $filter)
         {
             // Check if dropdown filter is already on the form
@@ -92,14 +93,14 @@
         {
             // Short text input
             case 'text_short':
-                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo $label;
                 echo form_input('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-short ui-widget-content"') . "\n";
                 echo '<div class="cg-clear"></div>' . "\n";
             break;
 
             // Long text input
             case 'text_long':
-                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo $label;
                 echo form_input('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long ui-widget-content"') . "\n";
                 echo '<div class="cg-clear"></div>' . "\n";
             break;
@@ -107,13 +108,13 @@
             // Checkbox
             case 'checkbox':
                 echo '<input class="cg-checkbox" type="checkbox" id="cg_field_' . $key . '" name="cg_field_' . $key . '" value="1"' . ($form->formdata[$key] ? ' checked="checked"' : '')  . ' />' . "\n";
-                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo $label;
                 echo '<div class="cg-clear"></div>' . "\n";
             break;
 
             // Dropdown
             case 'dropdown':
-                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo $label;
                 echo form_dropdown('cg_field_' . $key, $this->Carbo_model->get_table_dropdown($column->ref_table_db_name, $column->ref_table_id_name, $column->ref_field_db_name, $column->ref_field_type, $dd_filter), $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long ui-widget-content"') . "\n";
                 /*if (count($column->filters)) {
                     echo "
@@ -132,35 +133,35 @@
 
             // Text
             case 'textarea':
-                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo $label;
                 echo form_textarea('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="ui-widget-content"') . "\n";
                 echo '<div class="cg-clear"></div>' . "\n";
             break;
 
             // Date
             case 'datepicker':
-                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo $label;
                 echo form_input('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long cg-datepicker ui-widget-content" data-cg-date-format="' .  $column->date_format . '"') . "\n";
                 echo '<div class="cg-clear"></div>' . "\n";
             break;
 
             // Datetime
             case 'datetimepicker':
-                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo $label;
                 echo form_input('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long cg-datetimepicker ui-widget-content" data-cg-date-format="' .  $column->date_format . '" data-cg-time-format="' . $column->time_format . '"') . "\n";
                 echo '<div class="cg-clear"></div>' . "\n";
             break;
 
             // Time
             case 'timepicker':
-                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo $label;
                 echo form_input('cg_field_' . $key, $form->formdata[$key], 'id="cg_field_' . $key . '" class="cg-long cg-timepicker ui-widget-content" data-cg-time-format="' . $column->time_format . '"') . "\n";
                 echo '<div class="cg-clear"></div>' . "\n";
             break;
 
             // File upload
             case 'file':
-                echo form_label($column->name, 'cg_field_' . $key) . "\n";
+                echo $label;
                 echo '<input type="file" name="cg_field_' . $key . '" id="cg_field_' . $key . '" />' . "\n";
                 echo '<input type="hidden" value="' . $form->formdata[$key] . '" name="cg_field_' . $key . '" />';
                 echo '<div class="cg-clear"></div>' . "\n";

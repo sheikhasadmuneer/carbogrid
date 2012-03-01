@@ -11,7 +11,7 @@ class Sample extends CI_Controller
 
     function home()
     {
-        $data->page = 'home';
+        $data->page = 'grid_home';
         $this->load->view('container', $data);
     }
 
@@ -26,6 +26,7 @@ class Sample extends CI_Controller
                 'group' => 'User',
                 'required' => TRUE,
                 'unique' => TRUE,
+                'validation' => 'alpha_dash',
                 'form_control' => 'text_long',
                 'type' => 'string'),
             1 => array(
@@ -68,11 +69,11 @@ class Sample extends CI_Controller
                 'db_name' => 'city',
                 'header' => 'City',
                 'group' => 'User',
-                //'allow_filter' => FALSE,
                 'ref_table_db_name' => 'city',
                 'ref_field_db_name' => 'name',
                 'ref_field_type' => 'string',
                 'form_control' => 'dropdown',
+                'required' => TRUE,
                 'type' => '1-n'),
             6 => array(
                 'name' => 'Comment',
@@ -130,13 +131,13 @@ class Sample extends CI_Controller
         }
 
         // Pass grid to the view
-        $data->page = 'single';
+        $data->page = 'grid_single';
         $data->page_grid = $this->carbogrid->render();
 
         $this->load->view('container', $data);
     }
 
-    function multiple($grid1 = 'none', $grid2 = 'none', $grid3 = 'none')
+    function multiple($grid1 = 'none', $grid2 = 'none', $grid3 = 'none', $grid4 = 'none')
     {
         if ($this->input->post('activate'))
         {
@@ -287,9 +288,10 @@ class Sample extends CI_Controller
                 'db_name' => 'username',
                 'header' => 'Username',
                 'group' => 'User',
+                'form_control' => 'text_long',
                 'required' => TRUE,
                 'unique' => TRUE,
-                'form_control' => 'text_long',
+                'validation' => 'alpha_dash',
                 'type' => 'string'),
             1 => array(
                 'name' => 'Active',
@@ -309,6 +311,7 @@ class Sample extends CI_Controller
                 'ref_field_db_name' => 'name',
                 'ref_field_type' => 'string',
                 'form_control' => 'dropdown',
+                'required' => TRUE,
                 'type' => '1-n'),
             3 => array(
                 'name' => 'Comment',
@@ -354,11 +357,46 @@ class Sample extends CI_Controller
             return FALSE;
         }
 
+        // Grid 4
+        $columns = array(
+            0 => array(
+                'name' => 'City',
+                'db_name' => 'name',
+                'header' => 'City Name',
+                'group' => 'City Data',
+                'required' => TRUE,
+                'unique' => TRUE,
+                'form_control' => 'text_long',
+                'min_length' => 3,
+                'max_length' => 50,
+                'type' => 'string')
+        );
+
+        $params = array(
+            'id' => 'cities',
+            'table' => 'city',
+            'url' => 'sample/multiple',
+            'uri_param' => $grid4,
+            'params_before' => $grid1 . '/' . $grid2 . '/' . $grid3,
+            'columns' => $columns,
+            'allow_delete' => FALSE,
+            'show_empty_rows' => FALSE
+        );
+
+        $this->load->library('carbogrid', $params, 'grid4');
+
+        if ($this->grid4->is_ajax)
+        {
+            $this->grid4->render();
+            return FALSE;
+        }
+
         // Pass grid to the view
-        $data->page = 'multiple';
+        $data->page = 'grid_multiple';
         $data->grid1 = $this->grid1->render();
         $data->grid2 = $this->grid2->render();
         $data->grid3 = $this->grid3->render();
+        $data->grid4 = $this->grid4->render();
 
         $this->load->view('container', $data);
     }

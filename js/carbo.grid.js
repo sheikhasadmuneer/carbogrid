@@ -501,7 +501,7 @@ Carbo.Grid = function(id, opt) {
             me.load();
         }
         if (resp.dialog) {
-            $('.cg-dialog-wrapper .ui-dialog-content', context).html(resp.dialog);
+            $('.cg-dialog-wrapper .ui-dialog-content', context).html(resp.dialog).scrollTop(0);
             // Init form
             if (cfSettings[shortID]) {
                 cfInstances[shortID] = cfInstances[shortID] = new Carbo.Form('carboform_' + shortID, cfSettings[shortID]);

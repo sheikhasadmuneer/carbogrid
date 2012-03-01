@@ -72,6 +72,10 @@
     margin: 0;
     display: block;
 }
+.cg-form .cg-req {
+    color: #ff0000;
+    font-size: 0.9em;
+}
 .cg-form .cg-checkbox-field-cont label {
     width: auto;
     display: inline;
