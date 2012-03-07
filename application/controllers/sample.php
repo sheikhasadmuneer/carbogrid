@@ -118,6 +118,7 @@ class Sample extends CI_Controller
             'url' => 'sample/single',
             'uri_param' => $grid,
             'columns' => $columns,
+            'columns_visible' => array(0, 2, 3, 4),
             'commands' => $commands,
             'ajax' => TRUE
         );

@@ -282,6 +282,15 @@ class Carbogrid
             $this->order_string = $this->order_string ? rtrim($this->order_string, '_') : 'none';
         }
 
+        // Set initial column visibility
+        if ($this->allow_columns)
+        {
+            if (count($this->columns_visible))
+            {
+                $this->column_string = implode(':', $this->columns_visible);
+            }
+        }
+
         // Parse uri parameter
         //$uri_param = $this->CI->uri->segment($this->uri_segment);
         $uri_param = $this->uri_param;
