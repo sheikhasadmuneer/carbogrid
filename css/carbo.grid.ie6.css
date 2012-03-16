@@ -18,3 +18,6 @@
 .cg-dialog-form .cg-field-cont {
     padding: 0!important;
 }
+.cg-scroll {
+    width: 100%;
+}
